@@ -67,6 +67,6 @@ Lorentz.Draw = {};
 		if (coords.height !== undefined) {
 			coords.height = (parseFloat(coords.height) / 100) * frame.height;
 		}
-		console.log(coords);
+// 		console.log(coords);
 	};
 })(Lorentz.Draw);
