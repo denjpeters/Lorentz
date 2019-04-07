@@ -43,16 +43,31 @@ Lorentz.Item = class {
 
 		coord.v = this.speed;
 
-		coord.lambda = 1 / Math.sqrt(1 - (Math.pow(coord.v * 299792458, 2) / Math.pow(299792458, 2)));
-		coord.angle = 45 * coord.v;
-		coord.hypotenuse = atTime;
-		if (atTime > 0) {
-			coord.timelen = Math.abs(Math.sin(coord.angle) * coord.hypotenuse);
-			coord.distancelen = Math.sqrt(Math.pow(coord.hypotenuse, 2) - Math.pow(coord.timelen, 2));
-		} else {
-			coord.timelen = 0;
-			coord.distancelen = 0;
-		}
+		// if (coord.v === 1) {
+		// 	coord.angle = 45;
+		// 	coord.hypotenuse = atTime;
+		// 	coord.timelen = 1;
+		// 	coord.distancelen = 1;
+		// } else if (coord.v === -1) {
+		// 	coord.angle = -45;
+		// 	coord.hypotenuse = atTime;
+		// 	coord.timelen = 1;
+		// 	coord.distancelen = -1;
+		// } else {
+			// coord.lambda = 1 / Math.sqrt(1 - (Math.pow(coord.v * 299792458, 2) / Math.pow(299792458, 2)));
+			coord.angle = 45 * coord.v;
+			coord.hypotenuse = atTime;
+			if (atTime > 0) {
+				coord.timelen = Math.sin(coord.angle) * coord.hypotenuse;
+				coord.distancelen = Math.sqrt(Math.pow(coord.hypotenuse, 2) - Math.pow(coord.timelen, 2));
+			} else {
+				coord.timelen = 0;
+				coord.distancelen = 0;
+			}
+		// }
+
+		// coord.lambda = 1 / Math.sqrt(1 - (Math.pow(coord.v * 299792458, 2) / Math.pow(299792458, 2)));
+		// coord.newTime = coord.lamda * (atTime - ((coord.v * timeSize)/speedOfLight*speedOfLight));
 
 		coord.posx = 100 + (timeSize * coord.distancelen);
 		coord.posy = coord.timelen * timeSize;
