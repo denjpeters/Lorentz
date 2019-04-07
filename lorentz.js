@@ -31,7 +31,7 @@ Lorentz.Item = class {
 			this.coords[time] = coord;
 			Lorentz.Draw.DrawPoint(coord);
 			time++;
-		} while(coord.posy <= 100 && coord.posx >= 0 && coord.posx <= 200 && time < 400);
+		} while(coord.posy <= 100 && coord.posx >= -100 && coord.posx <= 100 && time < 400);
 	}
 
 	createCoord(atTime) {
@@ -41,38 +41,13 @@ Lorentz.Item = class {
 			relativeLorentzItem = new Lorentz.Item(0, "Default");
 		}
 
-		coord.v = this.speed;
+		coord.lorentz = {};
+		coord.lorentz.t = parseFloat(atTime) * 10;
+		coord.lorentz.r = coord.lorentz.t * this.speed;
+		coord.lorentz.i = Math.sqrt(Math.pow(coord.lorentz.t, 2) - Math.pow(coord.lorentz.r, 2));
 
-		// if (coord.v === 1) {
-		// 	coord.angle = 45;
-		// 	coord.hypotenuse = atTime;
-		// 	coord.timelen = 1;
-		// 	coord.distancelen = 1;
-		// } else if (coord.v === -1) {
-		// 	coord.angle = -45;
-		// 	coord.hypotenuse = atTime;
-		// 	coord.timelen = 1;
-		// 	coord.distancelen = -1;
-		// } else {
-			// coord.lambda = 1 / Math.sqrt(1 - (Math.pow(coord.v * 299792458, 2) / Math.pow(299792458, 2)));
-			coord.angle = 45 * coord.v;
-			coord.hypotenuse = atTime;
-			if (atTime > 0) {
-				coord.timelen = Math.sin(coord.angle) * coord.hypotenuse;
-				coord.distancelen = Math.sqrt(Math.pow(coord.hypotenuse, 2) - Math.pow(coord.timelen, 2));
-			} else {
-				coord.timelen = 0;
-				coord.distancelen = 0;
-			}
-		// }
-
-		// coord.lambda = 1 / Math.sqrt(1 - (Math.pow(coord.v * 299792458, 2) / Math.pow(299792458, 2)));
-		// coord.newTime = coord.lamda * (atTime - ((coord.v * timeSize)/speedOfLight*speedOfLight));
-
-		coord.posx = timeSize * coord.distancelen;
-		coord.posy = coord.timelen * timeSize;
-
-		// console.log(coord);
+		coord.posx = coord.lorentz.r;
+		coord.posy = coord.lorentz.i;
 
 		coord.centerx = coord.posx;
 		coord.centery = coord.posy;
@@ -122,8 +97,6 @@ Lorentz.Draw = class {
 		if (!Lorentz.Draw.TranslatePercent(coords)) {
 			return false;
 		}
-
-		console.log(coords.centerx, coords.centery);
 
 		if (coords.diameter === undefined) {
 			coords.diameter = 2.5;
@@ -250,4 +223,4 @@ Lorentz.Draw = class {
 
 function jsonCopy(src) {
 	return JSON.parse(JSON.stringify(src));
-};
+}

@@ -1,13 +1,16 @@
-h1 { color: blue; }
+h1 {
+	color:      blue;
+	text-align: center;
+}
 
 #divLorentz {
-width: 100vw;
-text-align: center;
+	width:      100vw;
+	text-align: center;
 }
 
 #cnvsLorentz {
-width: 100vw;
-height: 50vw;
-/*border:1px solid #c3c3c3;*/
-/*background-color: #eeeeee;*/
+	width:  100vw;
+	height: 50vw;
+	/*border:1px solid #c3c3c3;*/
+	/*background-color: #eeeeee;*/
 }
