@@ -42,12 +42,20 @@ Lorentz.Item = class {
 		}
 
 		coord.lorentz = {};
-		coord.lorentz.t = parseFloat(atTime) * 10;
-		coord.lorentz.r = coord.lorentz.t * this.speed;
-		coord.lorentz.i = Math.sqrt(Math.pow(coord.lorentz.t, 2) - Math.pow(coord.lorentz.r, 2));
+		// coord.lorentz.t = parseFloat(atTime) * 10;
+		// coord.lorentz.r = coord.lorentz.t * this.speed;
+		// coord.lorentz.i = Math.sqrt(Math.pow(coord.lorentz.t, 2) - Math.pow(coord.lorentz.r, 2));
 
-		coord.posx = coord.lorentz.r;
-		coord.posy = coord.lorentz.i;
+		coord.lorentz.sol = 1;
+		coord.lorentz.time = parseFloat(atTime) * 10;
+		coord.lorentz.distance = 0;
+		coord.lorentz.velocity = coord.lorentz.sol * this.speed;
+		coord.lorentz.gamma = 1 / (Math.sqrt(1 - (Math.pow(coord.lorentz.velocity, 2) / Math.pow(coord.lorentz.sol, 2))));
+		coord.lorentz.newTime = coord.lorentz.gamma * (coord.lorentz.time - ((coord.lorentz.velocity * coord.lorentz.distance) / Math.pow(coord.lorentz.sol, 2)));
+		coord.lorentz.newDistance = coord.lorentz.gamma * (coord.lorentz.distance - (coord.lorentz.velocity * coord.lorentz.time)) * -1;
+
+		coord.posx = coord.lorentz.newDistance;
+		coord.posy = coord.lorentz.newTime;
 
 		coord.centerx = coord.posx;
 		coord.centery = coord.posy;
