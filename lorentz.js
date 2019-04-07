@@ -1,18 +1,34 @@
 var Lorentz = {};
-Lorentz.Draw = {};
 
-(function (context) {
-	const cnvsLorentz = document.getElementById("cnvsLorentz");
-	const ctx = cnvsLorentz.getContext("2d");
-	const padding = 10;
-	const frame = {
-		width: cnvsLorentz.width * (1- (padding / 100)),
-		height: cnvsLorentz.height * (1- (padding / 50)),
-		xoffset: cnvsLorentz.width * (padding / 200),
-		yoffset: cnvsLorentz.height * (padding / 100)
-	};
+Lorentz.Item = class {
+	coords = [];
+	coords_last = [];
 	
-	context.DrawSquare = function(coords) {
+	constructor(speed, name, color = "black", startTime = 0, endTime = null) {
+		this.speed = speed;
+		this.name = name;
+		this.color = color;
+		this.startTime = startTime;
+		this.endTime = endTime;
+	}
+	
+	drawRay() {
+		Lorentz.Draw.DrawPoint({centerx: 100, centery: 50});
+	}
+};
+
+const cnvsLorentz = document.getElementById("cnvsLorentz");
+const ctx = cnvsLorentz.getContext("2d");
+const padding = 10;
+const frame = {
+	width: cnvsLorentz.width * (1- (padding / 100)),
+	height: cnvsLorentz.height * (1- (padding / 50)),
+	xoffset: cnvsLorentz.width * (padding / 200),
+	yoffset: cnvsLorentz.height * (padding / 100)
+};
+
+Lorentz.Draw = class {
+	static DrawSquare(coords) {
 		if (coords.centerx !== undefined) {
 			coords.x = coords.centerx - coords.width / 2;
 		}
@@ -20,7 +36,9 @@ Lorentz.Draw = {};
 			coords.y = coords.centery + coords.height / 2;
 		}
 		
-		context.TranslatePercent(coords);
+		if (!Lorentz.Draw.TranslatePercent(coords)) {
+			return false;
+		}
 		
 		if (coords.color !== undefined) {
 			ctx.fillStyle = coords.color;
@@ -28,10 +46,14 @@ Lorentz.Draw = {};
 			ctx.fillStyle = "#FF0000";
 		}
 		ctx.fillRect(coords.x,coords.y,coords.width,coords.height);
+		
+		return true;
 	};
 
-	context.DrawPoint = function(coords) {
-		context.TranslatePercent(coords);
+	static DrawPoint(coords) {
+		if (!Lorentz.Draw.TranslatePercent(coords)) {
+			return false;
+		}
 		
 		if (coords.diameter === undefined) {
 			coords.diameter = 2.5;
@@ -46,9 +68,15 @@ Lorentz.Draw = {};
 			ctx.fillStyle = "#FF0000";
 		}
 		ctx.fill();
+		
+		return true;
 	};
 	
-	context.TranslatePercent = function(coords) {
+	static TranslatePercent(coords) {
+		if (coords.centerx < 0 || coords.centerx > 200 || coords.centery < 0 || coords.centery > 100) {
+			return false;
+		}
+	
 		if (coords.x !== undefined) {
 			coords.x = frame.xoffset + (parseFloat(coords.x) / 200) * frame.width;
 		}
@@ -68,5 +96,7 @@ Lorentz.Draw = {};
 			coords.height = (parseFloat(coords.height) / 100) * frame.height;
 		}
 // 		console.log(coords);
+
+		return true;
 	};
-})(Lorentz.Draw);
+}
