@@ -69,10 +69,10 @@ Lorentz.Item = class {
 		// coord.lambda = 1 / Math.sqrt(1 - (Math.pow(coord.v * 299792458, 2) / Math.pow(299792458, 2)));
 		// coord.newTime = coord.lamda * (atTime - ((coord.v * timeSize)/speedOfLight*speedOfLight));
 
-		coord.posx = 100 + (timeSize * coord.distancelen);
+		coord.posx = timeSize * coord.distancelen;
 		coord.posy = coord.timelen * timeSize;
 
-		console.log(coord);
+		// console.log(coord);
 
 		coord.centerx = coord.posx;
 		coord.centery = coord.posy;
@@ -127,6 +127,8 @@ Lorentz.Draw = class {
 			return false;
 		}
 
+		console.log(coords.centerx, coords.centery);
+
 		if (coords.diameter === undefined) {
 			coords.diameter = 2.5;
 		}
@@ -145,20 +147,22 @@ Lorentz.Draw = class {
 	};
 
 	static TranslatePercent(coords) {
-		if (coords.centerx < 0 || coords.centerx > 200 || coords.centery < 0 || coords.centery > 100) {
-			return false;
-		}
-
 		if (coords.x !== undefined) {
-			coords.x = frame.xoffset + (parseFloat(coords.x) / 200) * frame.width;
+			coords.x = frame.xoffset + (parseFloat(coords.x + 100) / 200) * frame.width;
 		}
 		if (coords.y !== undefined) {
 			coords.y = cnvsLorentz.height - (frame.yoffset + (parseFloat(coords.y) / 100) * frame.height);
 		}
 		if (coords.centerx !== undefined) {
-			coords.centerx = frame.xoffset + (parseFloat(coords.centerx) / 200) * frame.width;
+			if (coords.centerx < -100 || coords.centerx > 100) {
+				return false;
+			}
+			coords.centerx = frame.xoffset + (parseFloat(coords.centerx + 100) / 200) * frame.width;
 		}
 		if (coords.centery !== undefined) {
+			if (coords.centery < 0 || coords.centery > 100) {
+				return false;
+			}
 			coords.centery = cnvsLorentz.height - (frame.yoffset + (parseFloat(coords.centery) / 100) * frame.height);
 		}
 		if (coords.width !== undefined) {
@@ -167,7 +171,7 @@ Lorentz.Draw = class {
 		if (coords.height !== undefined) {
 			coords.height = (parseFloat(coords.height) / 100) * frame.height;
 		}
-// 		console.log(coords);
+		// console.log(coords);
 
 		return true;
 	};
