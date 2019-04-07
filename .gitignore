@@ -6,3 +6,7 @@ composer.phar
 *.iml
 *.meta
 /nbproject/private/
+.idea/Lorentz.iml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
