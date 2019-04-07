@@ -9,10 +9,10 @@ Lorentz.Item = class {
 	coords = [];
 	coords_last = [];
 
-	constructor(speed, name, color = "black", startTime = 0, endTime = null) {
+	constructor(speed, name, fillStyle = "black", startTime = 0, endTime = null) {
 		this.speed = speed;
 		this.name = name;
-		this.color = color;
+		this.fillStyle = fillStyle;
 		this.startTime = startTime;
 		this.endTime = endTime;
 	}
@@ -77,7 +77,7 @@ Lorentz.Item = class {
 		coord.centerx = coord.posx;
 		coord.centery = coord.posy;
 
-		coord.color = this.color;
+		coord.fillStyle = this.fillStyle;
 
 		coord.drawPoint = atTime >= this.startTime && (atTime <= this.endTime || this.endTime === null);
 
@@ -87,7 +87,7 @@ Lorentz.Item = class {
 
 const cnvsLorentz = document.getElementById("cnvsLorentz");
 const ctx = cnvsLorentz.getContext("2d");
-const padding = 10;
+const padding = 5;
 const frame = {
 	width: cnvsLorentz.width * (1- (padding / 100)),
 	height: cnvsLorentz.height * (1- (padding / 50)),
@@ -108,11 +108,7 @@ Lorentz.Draw = class {
 			return false;
 		}
 
-		if (coords.color !== undefined) {
-			ctx.fillStyle = coords.color;
-		} else {
-			ctx.fillStyle = "#FF0000";
-		}
+		Lorentz.Draw.ProcessAppearance(coords);
 		ctx.fillRect(coords.x,coords.y,coords.width,coords.height);
 
 		return true;
@@ -133,37 +129,104 @@ Lorentz.Draw = class {
 			coords.diameter = 2.5;
 		}
 
+		if (coords.lineWidth === undefined) {
+			coords.lineWidth = 0;
+		}
+		if (coords.strokeStyle === undefined) {
+			coords.strokeStyle = "transparent";
+		}
+
 		ctx.beginPath();
 		ctx.arc(coords.centerx, coords.centery, parseFloat(frame.width) * (parseFloat(coords.diameter) / 400), 0, 2 * Math.PI);
-// 		ctx.stroke();
-		if (coords.color !== undefined) {
-			ctx.fillStyle = coords.color;
-		} else {
-			ctx.fillStyle = "#FF0000";
+		Lorentz.Draw.ProcessAppearance(coords, 0);
+		if (coords.lineWidth > 0) {
+			ctx.stroke();
 		}
 		ctx.fill();
 
 		return true;
 	};
 
+	static DrawLine(coords) {
+		Lorentz.Draw.TranslatePercent(coords);
+
+		ctx.beginPath();
+		ctx.moveTo(coords.x, coords.y);
+		ctx.lineTo(coords.tox, coords.toy);
+		Lorentz.Draw.ProcessAppearance(coords);
+		ctx.stroke();
+	};
+
+	static DrawOverlay() {
+
+		Lorentz.Draw.DrawLine({x: 0, y:0, tox: 0, toy:100, lineWidth: 5});
+
+		for (let i = 10; i <= 100; i+=10) {
+			Lorentz.Draw.DrawLine({x: i * -1, y:i, tox: i, toy:i, lineWidth: 1});
+			Lorentz.Draw.DrawLine({x: i, y:i, tox: i, toy:100, lineWidth: 1});
+			Lorentz.Draw.DrawLine({x: i * -1, y:i, tox: i * -1, toy:100, lineWidth: 1});
+		}
+
+		Lorentz.Draw.DrawLine({x: 0, y:0, tox: 100, toy:100, lineWidth: 5, strokeStyle: "gold"});
+		Lorentz.Draw.DrawLine({x: 0, y:0, tox: -100, toy:100, lineWidth: 5, strokeStyle: "gold"});
+	};
+
+	static DrawTestPattern() {
+		Lorentz.Draw.DrawSquare({centerx: 0, centery: 20, width: 8, height: 8});
+		Lorentz.Draw.DrawSquare({centerx: 0, centery: 20, width: 5, height: 5, fillStyle: "blue"});
+
+		Lorentz.Draw.DrawPoint({centerx: 0, centery: 20, diameter: 5});
+
+		Lorentz.Draw.DrawPoint({centerx: -100, centery: 0});
+		Lorentz.Draw.DrawPoint({centerx: -100, centery: 100});
+		Lorentz.Draw.DrawPoint({centerx: 100, centery: 0});
+		Lorentz.Draw.DrawPoint({centerx: 100, centery: 100});
+	}
+
+	static ProcessAppearance(coords) {
+		if (coords.lineWidth === undefined) {
+			ctx.lineWidth = 1;
+		} else {
+			ctx.lineWidth = coords.lineWidth;
+		}
+		if (coords.strokeStyle !== undefined) {
+			ctx.strokeStyle = coords.strokeStyle;
+		} else {
+			ctx.strokeStyle = "black";
+		}
+		if (coords.fillStyle !== undefined) {
+			ctx.fillStyle = coords.fillStyle;
+		} else {
+			ctx.fillStyle = "red";
+		}
+	}
+
 	static TranslatePercent(coords) {
+		let isValid = true;
+
 		if (coords.x !== undefined) {
-			coords.x = frame.xoffset + (parseFloat(coords.x + 100) / 200) * frame.width;
+			coords.x = this.TranslatePercentX(coords.x);
 		}
 		if (coords.y !== undefined) {
-			coords.y = cnvsLorentz.height - (frame.yoffset + (parseFloat(coords.y) / 100) * frame.height);
+			coords.y = this.TranslatePercentY(coords.y);
+		}
+		if (coords.tox !== undefined) {
+			coords.tox = this.TranslatePercentX(coords.tox);
+		}
+		if (coords.toy !== undefined) {
+			coords.toy = this.TranslatePercentY(coords.toy);
 		}
 		if (coords.centerx !== undefined) {
 			if (coords.centerx < -100 || coords.centerx > 100) {
-				return false;
+				isValid = false;
 			}
-			coords.centerx = frame.xoffset + (parseFloat(coords.centerx + 100) / 200) * frame.width;
+			coords.centerx = this.TranslatePercentX(coords.centerx);
 		}
 		if (coords.centery !== undefined) {
 			if (coords.centery < 0 || coords.centery > 100) {
-				return false;
+				isValid = false;
 			}
-			coords.centery = cnvsLorentz.height - (frame.yoffset + (parseFloat(coords.centery) / 100) * frame.height);
+			coords.centery = this.TranslatePercentY(coords.centery);
 		}
 		if (coords.width !== undefined) {
 			coords.width = (parseFloat(coords.width) / 200) * frame.width;
@@ -173,8 +236,16 @@ Lorentz.Draw = class {
 		}
 		// console.log(coords);
 
-		return true;
+		return isValid;
 	};
+
+	static TranslatePercentX(oldX) {
+		return frame.xoffset + (parseFloat(oldX + 100) / 200) * frame.width;
+	};
+
+	static TranslatePercentY(oldY) {
+		return cnvsLorentz.height - (frame.yoffset + (parseFloat(oldY) / 100) * frame.height);
+	}
 };
 
 function jsonCopy(src) {
