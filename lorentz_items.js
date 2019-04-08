@@ -20,12 +20,12 @@ Lorentz.Items = class {
 
 	static TestPattern() {
 		// for (var i = 0; i < 0.9; i+= 0.02) {
-// 	let itemFaster = new Lorentz.Item(i, "", "black");
-// 	itemFaster.drawRay();
-//
-// 	let itemSlower = new Lorentz.Item(i * -1, "", "black");
-// 	itemSlower.drawRay();
-// }
+		// 	let itemFaster = new Lorentz.Item(i, "", "black");
+		// 	itemFaster.drawRay();
+		//
+		// 	let itemSlower = new Lorentz.Item(i * -1, "", "black");
+		// 	itemSlower.drawRay();
+		// }
 
 		let me = new Lorentz.Item(-0.5, "Me", "black");
 		let cat = new Lorentz.Item(0.8, "Cat O", "orange");
