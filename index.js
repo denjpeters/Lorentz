@@ -11,7 +11,7 @@ Lorentz.Draw.Overlay();
 
 let me = new Lorentz.Item(-0.5, "Me", "black");
 let cat = new Lorentz.Item(0.8, "Cat", "orange");
-let cat2 = new Lorentz.Item(0.99, "Cat", "red");
+let cat2 = new Lorentz.Item(0.9, "Cat", "red");
 
 me.drawRay();
 cat.drawRay();

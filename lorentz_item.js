@@ -47,6 +47,8 @@ Lorentz.Item = class {
 
 		coord.fillStyle = this.fillStyle;
 
+		coord.class = "lorentzItem";
+
 		coord.drawPoint = atTime >= this.startTime && (atTime <= this.endTime || this.endTime === null);
 
 		return coord;

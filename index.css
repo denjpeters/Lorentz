@@ -32,6 +32,10 @@ svg .lightLines {
 	stroke: gold;
 }
 
+svg .lorentzItem {
+	cursor: pointer;
+}
+
 svg .testRed {
 	fill: red;
 }
