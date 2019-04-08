@@ -42,9 +42,6 @@ Lorentz.Item = class {
 		}
 
 		coord.lorentz = {};
-		// coord.lorentz.t = parseFloat(atTime) * 10;
-		// coord.lorentz.r = coord.lorentz.t * this.speed;
-		// coord.lorentz.i = Math.sqrt(Math.pow(coord.lorentz.t, 2) - Math.pow(coord.lorentz.r, 2));
 
 		coord.lorentz.sol = 1;
 		coord.lorentz.time = parseFloat(atTime) * 10;
