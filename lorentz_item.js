@@ -1,12 +1,14 @@
 Lorentz.Item = class {
+	static itemCounter = 0;
 	coords = [];
 
-	constructor(speed, name, fillStyle = "black", startTime = 0, endTime = null) {
+	constructor(item_id, speed, name, fillStyle = "black", startTime = 0, endTime = null) {
 		this.speed = speed;
 		this.name = name;
 		this.fillStyle = fillStyle;
 		this.startTime = startTime;
 		this.endTime = endTime;
+		this.item_id = item_id;
 	}
 
 	drawRay() {
@@ -48,6 +50,7 @@ Lorentz.Item = class {
 		coord.fillStyle = this.fillStyle;
 
 		coord.class = "lorentzItem";
+		coord.item_id = this.item_id;
 
 		coord.drawPoint = atTime >= this.startTime && (atTime <= this.endTime || this.endTime === null);
 

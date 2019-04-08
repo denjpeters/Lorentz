@@ -53,6 +53,12 @@ Lorentz.Draw = class {
 		if (coords.class !== undefined) {
 			newCircle.setAttribute("class", coords.class);
 		}
+		if (coords.attributes !== undefined) {
+			newCircle.setAttribute("data-attributes", JSON.stringify(coords.attributes));
+		}
+		if (coords.item_id !== undefined) {
+			newCircle.setAttribute("data-item_id", coords.item_id);
+		}
 		svgLorentz.appendChild(newCircle);
 
 		return true;
