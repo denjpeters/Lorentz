@@ -18,6 +18,17 @@ Lorentz.Items = class {
 		});
 	}
 
+	displayDetails(id = -1) {
+		const item = this.items[id];
+		const spnDetails = document.getElementById('spnDetails');
+
+		if (item) {
+			spnDetails.innerText = item.name;
+		} else {
+			spnDetails.innerText = "";
+		}
+	}
+
 	static TestPattern() {
 		// for (var i = 0; i < 0.9; i+= 0.02) {
 		// 	let itemFaster = new Lorentz.Item(i, "", "black");
