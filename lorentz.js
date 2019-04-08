@@ -1,9 +1,3 @@
-const timeSize = 10;
-const speedOfLight = 299792458;
-
-var Lorentz = {};
-
-let relativeLorentzItem = null;
 
 Lorentz.Item = class {
 	coords = [];
@@ -29,17 +23,13 @@ Lorentz.Item = class {
 		do {
 			coord = this.createCoord(time);
 			this.coords[time] = coord;
-			Lorentz.Draw.DrawPoint(coord);
+			Lorentz.Draw.Circle(coord);
 			time++;
 		} while(coord.posy <= 100 && coord.posx >= -100 && coord.posx <= 100 && time < 400);
 	}
 
 	createCoord(atTime) {
 		let coord = {};
-
-		if (relativeLorentzItem === null) {
-			relativeLorentzItem = new Lorentz.Item(0, "Default");
-		}
 
 		coord.lorentz = {};
 
@@ -65,146 +55,130 @@ Lorentz.Item = class {
 	}
 };
 
-const cnvsLorentz = document.getElementById("cnvsLorentz");
-const ctx = cnvsLorentz.getContext("2d");
+const svgLorentz = document.getElementById("svgLorentz");
+
 const padding = 5;
 const frame = {
-	width: cnvsLorentz.width * (1- (padding / 100)),
-	height: cnvsLorentz.height * (1- (padding / 50)),
-	xoffset: cnvsLorentz.width * (padding / 200),
-	yoffset: cnvsLorentz.height * (padding / 100)
+	width: svgLorentz.viewBox.baseVal.width * (1- (padding / 100)),
+	height: svgLorentz.viewBox.baseVal.height * (1- (padding / 50)),
+	xoffset: svgLorentz.viewBox.baseVal.width * (padding / 200),
+	yoffset: svgLorentz.viewBox.baseVal.height * (padding / 100)
 };
 
 Lorentz.Draw = class {
-	static DrawSquare(coords) {
-		if (coords.centerx !== undefined) {
+	static Rectangle(coords) {
+		if (coords.centerx !== undefined && coords.x === undefined) {
 			coords.x = coords.centerx - coords.width / 2;
 		}
-		if (coords.centery !== undefined) {
+		if (coords.centery !== undefined && coords.y === undefined) {
 			coords.y = coords.centery + coords.height / 2;
 		}
 
-		if (!Lorentz.Draw.TranslatePercent(coords)) {
+		if (!Lorentz.Draw._TranslatePercent(coords)) {
 			return false;
 		}
 
-		Lorentz.Draw.ProcessAppearance(coords);
-		ctx.fillRect(coords.x,coords.y,coords.width,coords.height);
+		const newRectangle = document.createElementNS('http://www.w3.org/2000/svg','rect');
+		newRectangle.setAttribute('x',coords.x);
+		newRectangle.setAttribute('y',coords.y);
+		newRectangle.setAttribute('width',coords.width);
+		newRectangle.setAttribute('height',coords.height);
+		newRectangle.setAttribute('class', coords.class);
+		svgLorentz.appendChild(newRectangle);
 
 		return true;
 	};
 
-	static DrawPoint(coords) {
+	static Circle(coords) {
 		if (coords.drawPoint === false) {
 			return false;
 		}
 
-		if (!Lorentz.Draw.TranslatePercent(coords)) {
+		if (coords.width === undefined) {
+			coords.width = 1;
+		}
+
+		if (!Lorentz.Draw._TranslatePercent(coords)) {
 			return false;
 		}
 
-		if (coords.diameter === undefined) {
-			coords.diameter = 2.5;
+		const newCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+		newCircle.setAttribute("cx", coords.centerx);
+		newCircle.setAttribute("cy", coords.centery);
+		newCircle.setAttribute("r", coords.width);
+		newCircle.setAttribute("fill", coords.fillStyle);
+		if (coords.class !== undefined) {
+			newCircle.setAttribute("class", coords.class);
 		}
-
-		if (coords.lineWidth === undefined) {
-			coords.lineWidth = 0;
-		}
-		if (coords.strokeStyle === undefined) {
-			coords.strokeStyle = "transparent";
-		}
-
-		ctx.beginPath();
-		ctx.arc(coords.centerx, coords.centery, parseFloat(frame.width) * (parseFloat(coords.diameter) / 400), 0, 2 * Math.PI);
-		Lorentz.Draw.ProcessAppearance(coords, 0);
-		if (coords.lineWidth > 0) {
-			ctx.stroke();
-		}
-		ctx.fill();
+		svgLorentz.appendChild(newCircle);
 
 		return true;
 	};
 
-	static DrawLine(coords) {
-		Lorentz.Draw.TranslatePercent(coords);
+	static Line(coords) {
+		Lorentz.Draw._TranslatePercent(coords);
 
-		ctx.beginPath();
-		ctx.moveTo(coords.x, coords.y);
-		ctx.lineTo(coords.tox, coords.toy);
-		Lorentz.Draw.ProcessAppearance(coords);
-		ctx.stroke();
+		const newLine = document.createElementNS('http://www.w3.org/2000/svg','line');
+		newLine.setAttribute('x1',coords.x);
+		newLine.setAttribute('y1',coords.y);
+		newLine.setAttribute('x2',coords.tox);
+		newLine.setAttribute('y2',coords.toy);
+		newLine.setAttribute('class', coords.class);
+		svgLorentz.appendChild(newLine);
 	};
 
-	static DrawOverlay() {
+	static Overlay() {
 
-		Lorentz.Draw.DrawLine({x: 0, y:0, tox: 0, toy:100, lineWidth: 5});
+		Lorentz.Draw.Line({x: 0, y:0, tox: 0, toy:100, class: "centerLine"});
 
 		for (let i = 10; i <= 100; i+=10) {
-			Lorentz.Draw.DrawLine({x: i * -1, y:i, tox: i, toy:i, lineWidth: 1});
-			Lorentz.Draw.DrawLine({x: i, y:i, tox: i, toy:100, lineWidth: 1});
-			Lorentz.Draw.DrawLine({x: i * -1, y:i, tox: i * -1, toy:100, lineWidth: 1});
+			Lorentz.Draw.Line({x: i * -1, y:i, tox: i, toy:i, class: "guideLines"});
+			Lorentz.Draw.Line({x: i, y:i, tox: i, toy:100, class: "guideLines"});
+			Lorentz.Draw.Line({x: i * -1, y:i, tox: i * -1, toy:100, class: "guideLines"});
 		}
 
-		Lorentz.Draw.DrawLine({x: 0, y:0, tox: 100, toy:100, lineWidth: 5, strokeStyle: "gold"});
-		Lorentz.Draw.DrawLine({x: 0, y:0, tox: -100, toy:100, lineWidth: 5, strokeStyle: "gold"});
+		Lorentz.Draw.Line({x: 0, y:0, tox: 100, toy:100, class: "lightLines"});
+		Lorentz.Draw.Line({x: 0, y:0, tox: -100, toy:100, class: "lightLines"});
 	};
 
-	static DrawTestPattern() {
-		Lorentz.Draw.DrawSquare({centerx: 0, centery: 20, width: 8, height: 8});
-		Lorentz.Draw.DrawSquare({centerx: 0, centery: 20, width: 5, height: 5, fillStyle: "blue"});
+	static TestPattern() {
+		Lorentz.Draw.Rectangle({centerx: 0, centery: 20, width: 8, height: 8, class: "testRed"});
+		Lorentz.Draw.Rectangle({centerx: 0, centery: 20, width: 5, height: 5, class: "testBlue"});
 
-		Lorentz.Draw.DrawPoint({centerx: 0, centery: 20, diameter: 5});
+		Lorentz.Draw.Circle({centerx: 0, centery: 20, diameter: 5});
 
-		Lorentz.Draw.DrawPoint({centerx: -100, centery: 0});
-		Lorentz.Draw.DrawPoint({centerx: -100, centery: 100});
-		Lorentz.Draw.DrawPoint({centerx: 100, centery: 0});
-		Lorentz.Draw.DrawPoint({centerx: 100, centery: 100});
+		Lorentz.Draw.Circle({centerx: -100, centery: 0});
+		Lorentz.Draw.Circle({centerx: -100, centery: 100});
+		Lorentz.Draw.Circle({centerx: 100, centery: 0});
+		Lorentz.Draw.Circle({centerx: 100, centery: 100});
 	}
 
-	static ProcessAppearance(coords) {
-		if (coords.lineWidth === undefined) {
-			ctx.lineWidth = 1;
-		} else {
-			ctx.lineWidth = coords.lineWidth;
-		}
-		if (coords.strokeStyle !== undefined) {
-			ctx.strokeStyle = coords.strokeStyle;
-		} else {
-			ctx.strokeStyle = "black";
-		}
-		if (coords.fillStyle !== undefined) {
-			ctx.fillStyle = coords.fillStyle;
-		} else {
-			ctx.fillStyle = "red";
-		}
-	}
-
-	static TranslatePercent(coords) {
+	static _TranslatePercent(coords) {
 		let isValid = true;
 
 		if (coords.x !== undefined) {
-			coords.x = this.TranslatePercentX(coords.x);
+			coords.x = this._TranslatePercentX(coords.x);
 		}
 		if (coords.y !== undefined) {
-			coords.y = this.TranslatePercentY(coords.y);
+			coords.y = this._TranslatePercentY(coords.y);
 		}
 		if (coords.tox !== undefined) {
-			coords.tox = this.TranslatePercentX(coords.tox);
+			coords.tox = this._TranslatePercentX(coords.tox);
 		}
 		if (coords.toy !== undefined) {
-			coords.toy = this.TranslatePercentY(coords.toy);
+			coords.toy = this._TranslatePercentY(coords.toy);
 		}
 		if (coords.centerx !== undefined) {
 			if (coords.centerx < -100 || coords.centerx > 100) {
 				isValid = false;
 			}
-			coords.centerx = this.TranslatePercentX(coords.centerx);
+			coords.centerx = this._TranslatePercentX(coords.centerx);
 		}
 		if (coords.centery !== undefined) {
 			if (coords.centery < 0 || coords.centery > 100) {
 				isValid = false;
 			}
-			coords.centery = this.TranslatePercentY(coords.centery);
+			coords.centery = this._TranslatePercentY(coords.centery);
 		}
 		if (coords.width !== undefined) {
 			coords.width = (parseFloat(coords.width) / 200) * frame.width;
@@ -217,12 +191,12 @@ Lorentz.Draw = class {
 		return isValid;
 	};
 
-	static TranslatePercentX(oldX) {
+	static _TranslatePercentX(oldX) {
 		return frame.xoffset + (parseFloat(oldX + 100) / 200) * frame.width;
 	};
 
-	static TranslatePercentY(oldY) {
-		return cnvsLorentz.height - (frame.yoffset + (parseFloat(oldY) / 100) * frame.height);
+	static _TranslatePercentY(oldY) {
+		return svgLorentz.viewBox.baseVal.height - (frame.yoffset + (parseFloat(oldY) / 100) * frame.height);
 	}
 };
 
