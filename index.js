@@ -1,11 +1,24 @@
+var lorentz_Items = null;
 
-Lorentz.Draw.Overlay();
+window.onload = function() {
+	Lorentz.Draw.Overlay();
 
-var lorentz_Items = new Lorentz.Items();
+	lorentz_Items = new Lorentz.Items();
 
-lorentz_Items.initialize();
+	lorentz_Items.initialize();
 
 // Lorentz.Items.TestPattern();
 
 // Lorentz.Draw.TestPattern();
 
+	Lorentz.Draw.svgLorentz.addEventListener("click", function(e) {
+		const element = e.target;
+		const item_id = element.getAttribute('data-item_id');
+
+		if (item_id !== null) {
+			lorentz_Items.displayDetails(item_id);
+		} else {
+			lorentz_Items.displayDetails();
+		}
+	});
+};

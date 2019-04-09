@@ -6,11 +6,11 @@ h1 {
 #divLorentz {
 	width:      100vw;
 	text-align: center;
-	padding:    0;
+	Lorentz.Draw.padding:    0;
 	margin:     0;
 }
 
-#svgLorentz {
+#Lorentz.Draw.svgLorentz {
 	width:            90vw;
 	height:           50vw;
 	/*border:           1px solid #c3c3c3;*/

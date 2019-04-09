@@ -1,14 +1,23 @@
-const svgLorentz = document.getElementById("svgLorentz");
-
-const padding = 5;
-const frame = {
-	width: svgLorentz.viewBox.baseVal.width * (1- (padding / 100)),
-	height: svgLorentz.viewBox.baseVal.height * (1- (padding / 50)),
-	xoffset: svgLorentz.viewBox.baseVal.width * (padding / 200),
-	yoffset: svgLorentz.viewBox.baseVal.height * (padding / 100)
-};
-
 Lorentz.Draw = class {
+	static get svgLorentz() {
+		if (Lorentz.Draw._svgLorentz === undefined) {
+			Lorentz.Draw._svgLorentz = document.getElementById("Lorentz.Draw.svgLorentz");
+		}
+
+		return Lorentz.Draw._svgLorentz;
+	};
+	static get padding() {
+		return 5;
+	};
+	static get frame() {
+		return {
+			width: Lorentz.Draw.svgLorentz.viewBox.baseVal.width * (1 - (Lorentz.Draw.padding / 100)),
+			height: Lorentz.Draw.svgLorentz.viewBox.baseVal.height * (1 - (Lorentz.Draw.padding / 50)),
+			xoffset: Lorentz.Draw.svgLorentz.viewBox.baseVal.width * (Lorentz.Draw.padding / 200),
+			yoffset: Lorentz.Draw.svgLorentz.viewBox.baseVal.height * (Lorentz.Draw.padding / 100)
+		};
+	};
+
 	static Rectangle(coords) {
 		if (coords.centerx !== undefined && coords.x === undefined) {
 			coords.x = coords.centerx - coords.width / 2;
@@ -27,7 +36,7 @@ Lorentz.Draw = class {
 		newRectangle.setAttribute('width',coords.width);
 		newRectangle.setAttribute('height',coords.height);
 		newRectangle.setAttribute('class', coords.class);
-		svgLorentz.appendChild(newRectangle);
+		Lorentz.Draw.svgLorentz.appendChild(newRectangle);
 
 		return true;
 	};
@@ -59,7 +68,7 @@ Lorentz.Draw = class {
 		if (coords.item_id !== undefined) {
 			newCircle.setAttribute("data-item_id", coords.item_id);
 		}
-		svgLorentz.appendChild(newCircle);
+		Lorentz.Draw.svgLorentz.appendChild(newCircle);
 
 		return true;
 	};
@@ -73,7 +82,7 @@ Lorentz.Draw = class {
 		newLine.setAttribute('x2',coords.tox);
 		newLine.setAttribute('y2',coords.toy);
 		newLine.setAttribute('class', coords.class);
-		svgLorentz.appendChild(newLine);
+		Lorentz.Draw.svgLorentz.appendChild(newLine);
 	};
 
 	static Overlay() {
@@ -130,10 +139,10 @@ Lorentz.Draw = class {
 			coords.centery = this._TranslatePercentY(coords.centery);
 		}
 		if (coords.width !== undefined) {
-			coords.width = (parseFloat(coords.width) / 200) * frame.width;
+			coords.width = (parseFloat(coords.width) / 200) * Lorentz.Draw.frame.width;
 		}
 		if (coords.height !== undefined) {
-			coords.height = (parseFloat(coords.height) / 100) * frame.height;
+			coords.height = (parseFloat(coords.height) / 100) * Lorentz.Draw.frame.height;
 		}
 		// console.log(coords);
 
@@ -141,10 +150,10 @@ Lorentz.Draw = class {
 	};
 
 	static _TranslatePercentX(oldX) {
-		return frame.xoffset + (parseFloat(oldX + 100) / 200) * frame.width;
+		return Lorentz.Draw.frame.xoffset + (parseFloat(oldX + 100) / 200) * Lorentz.Draw.frame.width;
 	};
 
 	static _TranslatePercentY(oldY) {
-		return svgLorentz.viewBox.baseVal.height - (frame.yoffset + (parseFloat(oldY) / 100) * frame.height);
+		return Lorentz.Draw.svgLorentz.viewBox.baseVal.height - (Lorentz.Draw.frame.yoffset + (parseFloat(oldY) / 100) * Lorentz.Draw.frame.height);
 	}
 };
