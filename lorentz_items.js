@@ -1,5 +1,11 @@
 Lorentz.Items = class {
-	items = [];
+	get items() {
+		if (this._items === undefined) {
+			return [];
+		}
+		return this._items;
+	}
+
 
 	initialize() {
 		Lorentz.Item.itemCounterIncrement();
