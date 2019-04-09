@@ -1,6 +1,16 @@
 Lorentz.Item = class {
-	static itemCounter = 0;
+	static get itemCounter() {
+		if (Lorentz.Item._itemCounter === undefined) {
+			return 0;
+		}
+
+		return Lorentz.Item._itemCounter;
+	}
 	coords = [];
+
+	static itemCounterIncrement() {
+		Lorentz.Item._itemCounter = Lorentz.Item.itemCounter + 1;
+	};
 
 	constructor(item_id, speed, name, fillStyle = "black", startTime = 0, endTime = null) {
 		this.speed = speed;

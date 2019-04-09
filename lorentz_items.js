@@ -2,11 +2,11 @@ Lorentz.Items = class {
 	items = [];
 
 	initialize() {
-		Lorentz.Item.itemCounter++;
+		Lorentz.Item.itemCounterIncrement();
 		this.items[Lorentz.Item.itemCounter] = new Lorentz.Item(Lorentz.Item.itemCounter, -0.85, "Me", "black");
-		Lorentz.Item.itemCounter++;
+		Lorentz.Item.itemCounterIncrement();
 		this.items[Lorentz.Item.itemCounter] = new Lorentz.Item(Lorentz.Item.itemCounter, 0.8, "Cat O", "orange");
-		Lorentz.Item.itemCounter++;
+		Lorentz.Item.itemCounterIncrement();
 		this.items[Lorentz.Item.itemCounter] = new Lorentz.Item(Lorentz.Item.itemCounter, 0.9, "Cat R", "red");
 
 		this.drawItems();
