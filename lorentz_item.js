@@ -6,7 +6,12 @@ Lorentz.Item = class {
 
 		return Lorentz.Item._itemCounter;
 	}
-	coords = [];
+	get coords() {
+		if (this._coords === undefined) {
+			return [];
+		}
+		return this._coords;
+	}
 
 	static itemCounterIncrement() {
 		Lorentz.Item._itemCounter = Lorentz.Item.itemCounter + 1;
