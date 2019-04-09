@@ -1,11 +1,9 @@
-var lorentz_Items = null;
+let lorentz_Items = null;
 
 window.onload = function() {
 	Lorentz.Draw.Overlay();
 
 	lorentz_Items = new Lorentz.Items();
-
-	lorentz_Items.initialize();
 
 // Lorentz.Items.TestPattern();
 

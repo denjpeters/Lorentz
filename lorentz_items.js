@@ -1,13 +1,7 @@
 Lorentz.Items = class {
-	get items() {
-		if (this._items === undefined) {
-			return [];
-		}
-		return this._items;
-	}
+	constructor() {
+		this.items = [];
 
-
-	initialize() {
 		Lorentz.Item.itemCounterIncrement();
 		this.items[Lorentz.Item.itemCounter] = new Lorentz.Item(Lorentz.Item.itemCounter, -0.85, "Me", "black");
 		Lorentz.Item.itemCounterIncrement();
