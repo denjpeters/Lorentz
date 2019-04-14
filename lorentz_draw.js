@@ -1,7 +1,7 @@
 Lorentz.Draw = class {
 	static get svgLorentz() {
 		if (Lorentz.Draw._svgLorentz === undefined) {
-			Lorentz.Draw._svgLorentz = document.getElementById("Lorentz.Draw.svgLorentz");
+			Lorentz.Draw._svgLorentz = document.getElementById("svgLorentz");
 		}
 
 		return Lorentz.Draw._svgLorentz;
@@ -86,6 +86,11 @@ Lorentz.Draw = class {
 	};
 
 	static Overlay() {
+		const parentElement = Lorentz.Draw.svgLorentz.parentElement
+		const emptySvg = Lorentz.Draw.svgLorentz.cloneNode(false);
+		parentElement.removeChild(Lorentz.Draw.svgLorentz);
+		parentElement.appendChild(emptySvg);
+		Lorentz.Draw._svgLorentz = emptySvg;
 
 		Lorentz.Draw.Line({x: 0, y:0, tox: 0, toy:100, class: "centerLine"});
 

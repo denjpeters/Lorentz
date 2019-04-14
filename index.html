@@ -30,13 +30,22 @@
 <h1>
 	Lorentz Transformations
 </h1>
-<div id="divLorentzAttributes">
-	<input type="range" min="-1" max="1" step="0.1" value="0" id="inpSpeed">
+<div>
+	<input type="range" min="-99.99" max="99.99" step="0.01" value="0" id="rngSpeed">
+	My Speed: <input type="number" style="text-align: right;" min="-99.99" max="99.99" step="0.01" id="txtSpeed" value="0"/> % Speed of Light
 	<span id="spnDetails"></span>
+	
 </div>
 <div id="divLorentz">
-	<svg id="Lorentz.Draw.svgLorentz" viewBox="0 0 2000 1000" xmlns="http://www.w3.org/2000/svg">
+	<svg id="svgLorentz" viewBox="0 0 2000 1000" xmlns="http://www.w3.org/2000/svg">
 	</svg>
+</div>
+<div>
+	<span style="color: blue;">&#11044;</span> = 1 Year for Me
+	                                           &nbsp;&nbsp;&nbsp;
+	<span style="color: red;">&#11044;</span> = 1 Year for You
+	                                           &nbsp;&nbsp;&nbsp;
+	<span style="color: green;">&#11044;</span> = Your location at my 10th Year
 </div>
 </body>
 </html>
