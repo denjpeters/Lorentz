@@ -31,21 +31,23 @@
 	Lorentz Transformations
 </h1>
 <div>
-	<input type="range" min="-99.99" max="99.99" step="0.01" value="0" id="rngSpeed">
-	My Speed: <input type="number" style="text-align: right;" min="-99.99" max="99.99" step="0.01" id="txtSpeed" value="0"/> % Speed of Light
+	<input type="range" min="-99.999" max="99.999" step="0.001" value="0" id="rngSpeed">
+	Your Speed: <input type="number" style="text-align: right; border: none;" min="-99.999" max="99.999" step="0.001" id="txtSpeed" value="0"/> % Speed of Light
 	<span id="spnDetails"></span>
 	
 </div>
-<div id="divLorentz">
+<div style="margin-top: 0.5em;">
+	When I am 10 years old, you will be <span id="yourAge"></span> years old.
+</div>
+<div id="divLorentz" style="margin-top: 0.5em;">
 	<svg id="svgLorentz" viewBox="0 0 2000 1000" xmlns="http://www.w3.org/2000/svg">
 	</svg>
 </div>
 <div>
-	<span style="color: blue;">&#11044;</span> = 1 Year for Me
-	                                           &nbsp;&nbsp;&nbsp;
-	<span style="color: red;">&#11044;</span> = 1 Year for You
-	                                           &nbsp;&nbsp;&nbsp;
-	<span style="color: green;">&#11044;</span> = Your location at my 10th Year
+	<span style="white-space: pre;"><span style="color: blue;">&#11044;</span> = 1 Year for Me&nbsp;&nbsp;&nbsp;</span>
+	<span style="white-space: pre;"><span style="color: red;">&#11044;</span> = 1 Year for You&nbsp;&nbsp;&nbsp;</span>
+	<span style="white-space: pre;"><span style="color: green;">&#11044;</span> = Your location at my 10th Year&nbsp;&nbsp;&nbsp;</span>
+	<span style="white-space: pre;"><strong style="color: gold;">&block;</strong> = Light Speed</span>
 </div>
 </body>
 </html>

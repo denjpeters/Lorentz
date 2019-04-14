@@ -1,14 +1,6 @@
 let lorentz_Items = null;
 
 window.onload = function() {
-	// Lorentz.Draw.Overlay();
-	//
-	// lorentz_Items = new Lorentz.Items();
-
-	// Lorentz.Items.TestPattern();
-
-	// Lorentz.Draw.TestPattern();
-
 	lorentz_Items = new Lorentz.Items();
 
 	window.drawLorentz(0);
@@ -31,11 +23,15 @@ window.onload = function() {
 	document.getElementById('rngSpeed').addEventListener("input", function(e) {
 		window.drawLorentz(parseFloat(this.value));
 	});
+
+	document.getElementById('rngSpeed').addEventListener("dblclick", function(e) {
+		window.drawLorentz(parseFloat(0));
+	});
 };
 
 window.drawLorentz = function(speed) {
-	if (speed >= 100) speed = 99.99;
-	if (speed <= -100) speed = -99.99;
+	if (speed >= 100) speed = 99.999;
+	if (speed <= -100) speed = -99.999;
 
 	document.getElementById('txtSpeed').value = speed;
 	document.getElementById('rngSpeed').value = speed;

@@ -42,7 +42,7 @@ Lorentz.Draw = class {
 	};
 
 	static Circle(coords) {
-		if (coords.drawPoint === false) {
+		if (coords !== undefined && coords.drawPoint === false) {
 			return false;
 		}
 

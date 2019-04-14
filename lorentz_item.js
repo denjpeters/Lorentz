@@ -17,10 +17,11 @@ Lorentz.Item = class {
 		Lorentz.Item._itemCounter = Lorentz.Item.itemCounter + 1;
 	};
 
-	constructor(item_id, speed, name, fillStyle = "black", startTime = 0, endTime = null) {
+	constructor(item_id, speed, name, fillStyle = "black", showAge = false, startTime = 0, endTime = null) {
 		this.speed = speed;
 		this.name = name;
 		this.fillStyle = fillStyle;
+		this.showAge = showAge;
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.item_id = item_id;
@@ -33,14 +34,36 @@ Lorentz.Item = class {
 		}
 
 		let time = 0;
+		let prevCoord = null;
 		let coord = null;
 
 		do {
+			prevCoord = JSON.parse(JSON.stringify(coord));
 			coord = this.createCoord(time);
 			this.coords[time] = coord;
 			Lorentz.Draw.Circle(coord);
 			time++;
 		} while(coord.posy <= 100 && coord.posx >= -100 && coord.posx <= 100 && time < 400);
+
+		if (this.showAge) {
+			const newPosy = 100;
+			const percentOfY = newPosy / coord.posy;
+			const newPosx = coord.posx * percentOfY;
+
+			const currHypotenuseLength = Math.sqrt(Math.pow(coord.posx, 2) + Math.pow(coord.posy, 2));
+			const prevHypotenuseLength = Math.sqrt(Math.pow(prevCoord.posx, 2) + Math.pow(prevCoord.posy, 2));
+			const newHypotenuseLength = Math.sqrt(Math.pow(newPosx, 2) + Math.pow(newPosy, 2));
+			const diffHypotenuseLength = (newHypotenuseLength - prevHypotenuseLength) / (currHypotenuseLength - prevHypotenuseLength);
+
+			const newTime = parseFloat(time - 2) + diffHypotenuseLength;
+
+			Lorentz.Draw.Circle({
+				centerx: newPosx,
+				centery: newPosy,
+				fillStyle: "green"
+			});
+			document.getElementById('yourAge').innerText = newTime.toFixed(2);
+		}
 	}
 
 	createCoord(atTime) {
