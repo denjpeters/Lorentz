@@ -85,8 +85,14 @@ Lorentz.Draw = class {
 		Lorentz.Draw.svgLorentz.appendChild(newLine);
 	};
 
-	static Overlay() {
-		const parentElement = Lorentz.Draw.svgLorentz.parentElement
+	static Overlay(duration) {
+		if (duration === undefined) {
+			duration = 10;
+		}
+		Lorentz.Draw.Duration = parseFloat(duration);
+		Lorentz.Draw.DurationSize = 100 / Lorentz.Draw.Duration;
+
+		const parentElement = Lorentz.Draw.svgLorentz.parentElement;
 		const emptySvg = Lorentz.Draw.svgLorentz.cloneNode(false);
 		parentElement.removeChild(Lorentz.Draw.svgLorentz);
 		parentElement.appendChild(emptySvg);
@@ -94,7 +100,7 @@ Lorentz.Draw = class {
 
 		Lorentz.Draw.Line({x: 0, y:0, tox: 0, toy:100, class: "centerLine"});
 
-		for (let i = 10; i <= 100; i+=10) {
+		for (let i = Lorentz.Draw.DurationSize; Math.round(i) <= 100; i+=Lorentz.Draw.DurationSize) {
 			Lorentz.Draw.Line({x: i * -1, y:i, tox: i, toy:i, class: "guideLines"});
 			Lorentz.Draw.Line({x: i, y:i, tox: i, toy:100, class: "guideLines"});
 			Lorentz.Draw.Line({x: i * -1, y:i, tox: i * -1, toy:100, class: "guideLines"});
@@ -132,13 +138,13 @@ Lorentz.Draw = class {
 			coords.toy = this._TranslatePercentY(coords.toy);
 		}
 		if (coords.centerx !== undefined) {
-			if (coords.centerx < -100 || coords.centerx > 100) {
+			if (Math.round(coords.centerx) < -100 || Math.round(coords.centerx) > 100) {
 				isValid = false;
 			}
 			coords.centerx = this._TranslatePercentX(coords.centerx);
 		}
 		if (coords.centery !== undefined) {
-			if (coords.centery < 0 || coords.centery > 100) {
+			if (Math.round(coords.centery) < 0 || Math.round(coords.centery) > 100) {
 				isValid = false;
 			}
 			coords.centery = this._TranslatePercentY(coords.centery);

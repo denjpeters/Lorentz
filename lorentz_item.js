@@ -17,8 +17,19 @@ Lorentz.Item = class {
 		Lorentz.Item._itemCounter = Lorentz.Item.itemCounter + 1;
 	};
 
-	constructor(item_id, speed, name, fillStyle = "black", showAge = false, startTime = 0, endTime = null) {
+	get duration() {
+		if (this._duration === undefined) this._duration = parseFloat(10);
+
+		return this._duration;
+	}
+
+	set duration(newDuration) {
+		this._duration = newDuration;
+	}
+
+	constructor(item_id, duration, speed, name, fillStyle = "black", showAge = false, startTime = 0, endTime = null) {
 		this.speed = speed;
+		this._duration = duration;
 		this.name = name;
 		this.fillStyle = fillStyle;
 		this.showAge = showAge;
@@ -41,21 +52,17 @@ Lorentz.Item = class {
 			prevCoord = JSON.parse(JSON.stringify(coord));
 			coord = this.createCoord(time);
 			this.coords[time] = coord;
+			// console.log(coord);
 			Lorentz.Draw.Circle(coord);
 			time++;
-		} while(coord.posy <= 100 && coord.posx >= -100 && coord.posx <= 100 && time < 400);
+		} while(coord.posy <= 100 && coord.posx >= -100 && coord.posx <= 100 && time < 4000);
 
 		if (this.showAge) {
 			const newPosy = 100;
 			const percentOfY = newPosy / coord.posy;
 			const newPosx = coord.posx * percentOfY;
 
-			const currHypotenuseLength = Math.sqrt(Math.pow(coord.posx, 2) + Math.pow(coord.posy, 2));
-			const prevHypotenuseLength = Math.sqrt(Math.pow(prevCoord.posx, 2) + Math.pow(prevCoord.posy, 2));
-			const newHypotenuseLength = Math.sqrt(Math.pow(newPosx, 2) + Math.pow(newPosy, 2));
-			const diffHypotenuseLength = (newHypotenuseLength - prevHypotenuseLength) / (currHypotenuseLength - prevHypotenuseLength);
-
-			const newTime = parseFloat(time - 2) + diffHypotenuseLength;
+			const newTime = Math.sqrt(Math.pow(newPosy, 2) - Math.pow(newPosx, 2)) / (100 / this.duration);
 
 			Lorentz.Draw.Circle({
 				centerx: newPosx,
@@ -72,7 +79,7 @@ Lorentz.Item = class {
 		coord.lorentz = {};
 
 		coord.lorentz.sol = 1;
-		coord.lorentz.time = parseFloat(atTime) * 10;
+		coord.lorentz.time = parseFloat(atTime) * (100 / this.duration);
 		coord.lorentz.distance = 0;
 		coord.lorentz.velocity = coord.lorentz.sol * this.speed;
 		coord.lorentz.gamma = 1 / (Math.sqrt(1 - (Math.pow(coord.lorentz.velocity, 2) / Math.pow(coord.lorentz.sol, 2))));
@@ -89,6 +96,8 @@ Lorentz.Item = class {
 
 		coord.class = "lorentzItem";
 		coord.item_id = this.item_id;
+
+		// console.log(this.speed, coord);
 
 		coord.drawPoint = atTime >= this.startTime && (atTime <= this.endTime || this.endTime === null);
 
