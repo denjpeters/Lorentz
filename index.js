@@ -55,7 +55,10 @@ window.drawLorentz = function (speed) {
 	document.getElementById('txtSpeed').innerText = speed;
 	document.getElementById('rngSpeed').value = speed;
 
-	const duration = parseFloat(document.getElementById('txtDuration').innerText);
+	const duration = parseInt(document.getElementById('txtDuration').innerText);
+
+	document.getElementById('txtDuration').innerText = duration;
+	document.getElementById('spnDuration').innerText = duration;
 
 	lorentz_Items.populate(speed, duration);
 };
