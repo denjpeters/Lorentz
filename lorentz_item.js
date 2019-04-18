@@ -81,7 +81,7 @@ Lorentz.Item = class {
 			// equations = "\\begin{aligned}t'&=\\gamma \\left(t-{\\frac {vx}{c^{2}}}\\right)\\\\x'&=\\gamma \\left(x-vt\\right)\\\\y'&=y\\\\z'&=z\\end{aligned}";
 
 			equations = "\\begin{aligned}t'&=\\gamma \\left(t-{\\frac {vx}{c^{2}}}\\right)\\end{aligned}";  // Lorentz Time Transformation
-			// equations += "\\begin{aligned}\\gamma =\\textstyle \\left({\\sqrt {1-{\\frac {v^{2}}{c^{2}}}}}\\right)^{-1}\\end{aligned}"; // Gamma Definition
+			equations += "\\begin{aligned}\\gamma =\\textstyle \\left({\\sqrt {1-{\\frac {v^{2}}{c^{2}}}}}\\right)^{-1}\\end{aligned}"; // Gamma Definition
 			equations += "\\begin{aligned}t'&=\\textstyle \\left({\\sqrt {1-{\\frac {v^{2}}{c^{2}}}}}\\right)^{-1}\\left(t-{\\frac {vx}{c^{2}}}\\right)\\end{aligned}"; // with gamma Definition
 
 			equations += "\\begin{aligned}t&=time=" + this.duration +  "\\end{aligned}";
