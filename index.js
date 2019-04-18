@@ -60,5 +60,7 @@ window.drawLorentz = function (speed) {
 	document.getElementById('txtDuration').innerText = duration;
 	document.getElementById('spnDuration').innerText = duration;
 
+	document.getElementById('yourAgeAcc').innerText = duration;
+
 	lorentz_Items.populate(speed, duration);
 };

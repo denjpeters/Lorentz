@@ -55,7 +55,8 @@ Lorentz.Item = class {
 			// console.log(coord);
 			Lorentz.Draw.Circle(coord);
 			time++;
-		} while(coord.posy <= 100 && coord.posx >= -100 && coord.posx <= 100 && time < 4000);
+		} while(time <= this.duration);
+		// } while(coord.posy <= 100 && coord.posx >= -100 && coord.posx <= 100 && time < 4000);
 
 		if (this.showAge) {
 			const newPosy = 100;
@@ -70,6 +71,10 @@ Lorentz.Item = class {
 				fillStyle: "green"
 			});
 			document.getElementById('yourAge').innerText = newTime.toFixed(2);
+
+			const deltaT = this.duration / Math.sqrt(1 - (Math.pow(this.speed, 2) / Math.pow(1, 2)));
+
+			document.getElementById('myAgeAcc').innerText = deltaT.toFixed(2);
 		}
 	}
 
