@@ -84,6 +84,11 @@ Lorentz.Item = class {
 			// equations += "\\begin{aligned}\\gamma =\\textstyle \\left({\\sqrt {1-{\\frac {v^{2}}{c^{2}}}}}\\right)^{-1}\\end{aligned}"; // Gamma Definition
 			equations += "\\begin{aligned}t'&=\\textstyle \\left({\\sqrt {1-{\\frac {v^{2}}{c^{2}}}}}\\right)^{-1}\\left(t-{\\frac {vx}{c^{2}}}\\right)\\end{aligned}"; // with gamma Definition
 
+			equations += "\\begin{aligned}t&=time=" + this.duration +  "\\end{aligned}";
+			equations += "\\begin{aligned}v&=velocity=" + coord.lorentz.velocity.toFixed(3) +  "\\end{aligned}";
+			equations += "\\begin{aligned}x&=my\\ distance=" + coord.lorentz.distance +  "\\end{aligned}";
+			equations += "\\begin{aligned}c&=speed\\ of\\ light=" + coord.lorentz.sol +  "\\end{aligned}";
+
 
 			equations += "\\begin{aligned}t'&=\\textstyle \\left({\\sqrt {1-{\\frac {" + coord.lorentz.velocity.toFixed(3) + "^{2}}{" + coord.lorentz.sol + "^{2}}}}}\\right)^{-1}\\left(" + this.duration + "-{\\frac {" + coord.lorentz.velocity.toFixed(3) + "*" + coord.lorentz.distance + "}{" + coord.lorentz.sol + "^{2}}}\\right)\\end{aligned}"; // with values populated
 

@@ -26,6 +26,17 @@ window.onload = function () {
 		window.drawLorentz();
 	});
 
+	document.getElementById('yourAgeAcc').addEventListener("focus", function (e) {
+		setTimeout(function () {
+			document.execCommand('selectAll', false, null);
+		}, 150);
+	});
+
+	document.getElementById('yourAgeAcc').addEventListener("blur", function (e) {
+		document.getElementById('txtDuration').innerText = this.innerText;
+		window.drawLorentz();
+	});
+
 	document.getElementById('txtSpeed').addEventListener("focus", function (e) {
 		setTimeout(function () {
 			document.execCommand('selectAll', false, null);
