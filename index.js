@@ -3,7 +3,7 @@ let lorentz_Items = null;
 window.onload = function () {
 	lorentz_Items = new Lorentz.Items();
 
-	window.drawLorentz(55.555);
+	window.drawLorentz(0);
 
 	Lorentz.Draw.svgLorentz.addEventListener("click", function (e) {
 		const element = e.target;
