@@ -5,16 +5,16 @@ window.onload = function () {
 
 	window.drawLorentz(86.603);
 
-	Lorentz.Draw.svgLorentz.addEventListener("click", function (e) {
-		const element = e.target;
-		const item_id = element.getAttribute('data-item_id');
-
-		if (item_id !== null) {
-			lorentz_Items.displayDetails(item_id);
-		} else {
-			lorentz_Items.displayDetails();
-		}
-	});
+	// Lorentz.Draw.svgLorentz.addEventListener("click", function (e) {
+	// 	const element = e.target;
+	// 	const item_id = element.getAttribute('data-item_id');
+	//
+	// 	if (item_id !== null) {
+	// 		lorentz_Items.displayDetails(item_id);
+	// 	} else {
+	// 		lorentz_Items.displayDetails();
+	// 	}
+	// });
 
 	document.getElementById('txtDuration').addEventListener("focus", function (e) {
 		setTimeout(function () {
@@ -73,5 +73,5 @@ window.drawLorentz = function (speed) {
 
 	document.getElementById('yourAgeAcc').innerText = duration;
 
-	lorentz_Items.populate(speed, duration);
+	lorentz_Items.populatePoint(speed, duration);
 };

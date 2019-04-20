@@ -6,16 +6,22 @@ Lorentz.Items = class {
 		this.drawItems();
 	}
 
-	populate(speed, duration) {
-		this.items = [];
+	populateStatic(duration = 5, increments = 0.01) {
+		for (let i = 0; i < 0.99; i+= 0.01) {
+			Lorentz.Item.itemCounterIncrement();
+			this.items[Lorentz.Item.itemCounter] = new Lorentz.Item(Lorentz.Item.itemCounter, duration, i, "", "black");
 
-		// for (let i = 0; i < 0.99; i+= 0.01) {
-		// 	Lorentz.Item.itemCounterIncrement();
-		// 	this.items[Lorentz.Item.itemCounter] = new Lorentz.Item(Lorentz.Item.itemCounter, duration, i, "", "black");
-		//
-		// 	Lorentz.Item.itemCounterIncrement();
-		// 	this.items[Lorentz.Item.itemCounter] = new Lorentz.Item(Lorentz.Item.itemCounter, duration, i * -1, "", "black");
-		// }
+			Lorentz.Item.itemCounterIncrement();
+			this.items[Lorentz.Item.itemCounter] = new Lorentz.Item(Lorentz.Item.itemCounter, duration, i * -1, "", "black");
+		}
+
+		this._duration = duration;
+
+		this.drawItems();
+	}
+
+	populatePoint(speed, duration) {
+		this.items = [];
 
 		Lorentz.Item.itemCounterIncrement();
 		this.items[Lorentz.Item.itemCounter] = new Lorentz.Item(Lorentz.Item.itemCounter, duration, 0, "Them", "blue");

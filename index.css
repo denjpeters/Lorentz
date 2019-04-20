@@ -26,12 +26,17 @@ svg .centerLine {
 
 svg .guideLines {
 	stroke-width: 1px;
-	stroke:       black;
+	stroke:       lightgray;
 }
 
 svg .lightLines {
 	stroke-width: 5px;
 	stroke:       gold;
+}
+
+svg .staticLines {
+	stroke-width: 5px;
+	stroke:       blue;
 }
 
 svg .lorentzItem {

@@ -7,8 +7,14 @@ Lorentz.Draw = class {
 		return Lorentz.Draw._svgLorentz;
 	};
 	static get padding() {
-		return 5;
+		if (Lorentz.Draw._Padding === undefined) {
+			return 5;
+		}
+		return Lorentz.Draw._Padding;
 	};
+	static set padding(value) {
+		Lorentz.Draw._Padding = value;
+	}
 	static get frame() {
 		return {
 			width: Lorentz.Draw.svgLorentz.viewBox.baseVal.width * (1 - (Lorentz.Draw.padding / 100)),
@@ -74,15 +80,16 @@ Lorentz.Draw = class {
 	};
 
 	static Line(coords) {
-		Lorentz.Draw._TranslatePercent(coords);
+		if (Lorentz.Draw._TranslatePercent(coords)) {
 
-		const newLine = document.createElementNS('http://www.w3.org/2000/svg','line');
-		newLine.setAttribute('x1',coords.x);
-		newLine.setAttribute('y1',coords.y);
-		newLine.setAttribute('x2',coords.tox);
-		newLine.setAttribute('y2',coords.toy);
-		newLine.setAttribute('class', coords.class);
-		Lorentz.Draw.svgLorentz.appendChild(newLine);
+			const newLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+			newLine.setAttribute('x1', coords.x);
+			newLine.setAttribute('y1', coords.y);
+			newLine.setAttribute('x2', coords.tox);
+			newLine.setAttribute('y2', coords.toy);
+			newLine.setAttribute('class', coords.class);
+			Lorentz.Draw.svgLorentz.appendChild(newLine);
+		}
 	};
 
 	static Overlay(duration) {
@@ -109,6 +116,43 @@ Lorentz.Draw = class {
 		Lorentz.Draw.Line({x: 0, y:0, tox: 100, toy:100, class: "lightLines"});
 		Lorentz.Draw.Line({x: 0, y:0, tox: -100, toy:100, class: "lightLines"});
 	};
+
+	static Curve(atTime, duration) {
+		const speedInterval = 0.01;
+		let prevCoord = Lorentz.Draw.CreateCoord(atTime, duration, 0);
+
+		for (let i=0; i<0.999; i+=speedInterval) {
+			let nextCoord = Lorentz.Draw.CreateCoord(atTime, duration, i);
+			Lorentz.Draw.Line({x: prevCoord.centerx, y: prevCoord.centery, tox: nextCoord.centerx, toy: nextCoord.centery, class: "staticLines"});
+			Lorentz.Draw.Line({x: prevCoord.centerx * -1, y: prevCoord.centery, tox: nextCoord.centerx * -1, toy: nextCoord.centery, class: "staticLines"});
+			prevCoord = nextCoord;
+		}
+	}
+
+	static CreateCoord(atTime, duration, speed) {
+		let coord = {};
+
+		coord.lorentz = {};
+
+		coord.lorentz.sol = 1;
+		coord.lorentz.time = parseFloat(atTime) * (100 / duration);
+		coord.lorentz.distance = 0;
+		coord.lorentz.velocity = coord.lorentz.sol * speed;
+		coord.lorentz.gamma = 1 / (Math.sqrt(1 - (Math.pow(coord.lorentz.velocity, 2) / Math.pow(coord.lorentz.sol, 2))));
+		coord.lorentz.newTime = coord.lorentz.gamma * (coord.lorentz.time - ((coord.lorentz.velocity * coord.lorentz.distance) / Math.pow(coord.lorentz.sol, 2)));
+		coord.lorentz.newDistance = coord.lorentz.gamma * (coord.lorentz.distance - (coord.lorentz.velocity * coord.lorentz.time)) * -1;
+
+		coord.posx = coord.lorentz.newDistance;
+		coord.posy = coord.lorentz.newTime;
+
+		coord.centerx = coord.posx;
+		coord.centery = coord.posy;
+
+
+		coord.class = "lorentzItem";
+
+		return coord;
+	}
 
 	static TestPattern() {
 		Lorentz.Draw.Rectangle({centerx: 0, centery: 20, width: 8, height: 8, class: "testRed"});
@@ -155,7 +199,6 @@ Lorentz.Draw = class {
 		if (coords.height !== undefined) {
 			coords.height = (parseFloat(coords.height) / 100) * Lorentz.Draw.frame.height;
 		}
-		// console.log(coords);
 
 		return isValid;
 	};

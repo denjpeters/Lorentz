@@ -50,7 +50,10 @@ Lorentz.Item = class {
 
 		do {
 			prevCoord = JSON.parse(JSON.stringify(coord));
-			coord = this.createCoord(time);
+			coord = Lorentz.Draw.CreateCoord(time, this.duration, this.speed);
+			coord.fillStyle = this.fillStyle;
+			coord.item_id = this.item_id;
+			coord.drawPoint = time >= this.startTime && (time <= this.endTime || this.endTime === null);
 			this.coords[time] = coord;
 			Lorentz.Draw.Circle(coord);
 			time++;
@@ -74,32 +77,7 @@ Lorentz.Item = class {
 
 			document.getElementById('myAgeAcc').innerText = deltaT.toFixed(3);
 
-			// let equations = "\\begin{aligned}t'&=\\textstyle \\left(t-{\\frac {vx}{c^{2}}}\\right)/\\sqrt {1-{\\frac {v^{2}}{c^{2}}}}\\end{aligned}"; // with gamma Definition
-			//
-			// equations += "\\begin{aligned}t'&=my\\ future\\ age=?\\end{aligned}";
-			// equations += "\\begin{aligned}t&=your\\ future\\ age=" + this.duration +  "\\end{aligned}";
-			// equations += "\\begin{aligned}v&=your\\ velocity=" + coord.lorentz.velocity.toFixed(3) +  "\\end{aligned}";
-			// equations += "\\begin{aligned}x&=my\\ distance\\ travelled=" + coord.lorentz.distance +  "\\end{aligned}";
-			// equations += "\\begin{aligned}c&=speed\\ of\\ light=" + coord.lorentz.sol +  "\\end{aligned}";
-			//
-			//
-			// equations += "\\begin{aligned}t'&=\\textstyle \\left(" + this.duration + "-{\\frac {" + coord.lorentz.velocity.toFixed(3) + "\\ *\\ " + coord.lorentz.distance + "}{" + coord.lorentz.sol + "^{2}}}\\right)/\\sqrt {1-{\\frac {" + coord.lorentz.velocity.toFixed(3) + "^{2}}{" + coord.lorentz.sol + "^{2}}}}\\end{aligned}"; // with values populated
-			//
-			// equations += "\\begin{aligned}t'&=\\textstyle \\left(" + this.duration + "-{\\frac {" + (coord.lorentz.velocity * coord.lorentz.distance).toFixed(3) + "}{" + Math.pow(coord.lorentz.sol, 2).toFixed(3) + "}}\\right)/\\sqrt {1-{\\frac {" + Math.pow(coord.lorentz.velocity, 2).toFixed(3) + "}{" + Math.pow(coord.lorentz.sol, 2).toFixed(3) + "}}}\\end{aligned}"; // with values populated
-			//
-			// equations += "\\begin{aligned}t'&=\\textstyle \\left(" + this.duration + "-{" + ((coord.lorentz.velocity * coord.lorentz.distance) / Math.pow(coord.lorentz.sol, 2)).toFixed(3) + "}\\right)/\\sqrt {1-{" + (Math.pow(coord.lorentz.velocity, 2) / Math.pow(coord.lorentz.sol, 2)).toFixed(3) + "}}\\end{aligned}"; // with values populated
-			//
-			// equations += "\\begin{aligned}t'&=\\textstyle " + (this.duration - ((coord.lorentz.velocity * coord.lorentz.distance) / Math.pow(coord.lorentz.sol, 2))).toFixed(3) + "/\\sqrt {" + (1 - (Math.pow(coord.lorentz.velocity, 2) / Math.pow(coord.lorentz.sol, 2))).toFixed(3) + "}\\end{aligned}"; // with values populated
-			//
-			// equations += "\\begin{aligned}t'&=\\textstyle " + (this.duration - ((coord.lorentz.velocity * coord.lorentz.distance) / Math.pow(coord.lorentz.sol, 2))).toFixed(3) + "/" + Math.sqrt(1 - (Math.pow(coord.lorentz.velocity, 2) / Math.pow(coord.lorentz.sol, 2))).toFixed(3) + "\\end{aligned}"; // with values populated
-			//
-			// equations += "\\begin{aligned}t'&=\\textstyle " + ((this.duration - ((coord.lorentz.velocity * coord.lorentz.distance) / Math.pow(coord.lorentz.sol, 2))) / Math.sqrt(1 - (Math.pow(coord.lorentz.velocity, 2) / Math.pow(coord.lorentz.sol, 2)))).toFixed(3) + "=my\\ future\\ age\\ when\\ you\\ are\\ " + this.duration + "\\end{aligned}"; // with values populated
-
-
 			let equations = "\\begin{aligned}t'&=\\textstyle \\left(t-{\\frac {vx}{c^{2}}}\\right)/\\sqrt {1-{\\frac {v^{2}}{c^{2}}}}\\end{aligned}"; // with gamma Definition
-
-			// coord.lorentz.distance = coord.lorentz.velocity;
-			// coord.lorentz.velocity = 0;
 
 			equations += "\\begin{aligned}t'&=my\\ future\\ age=?\\end{aligned}";
 			equations += "\\begin{aligned}t&=your\\ future\\ age=" + this.duration +  "\\end{aligned}";
@@ -134,36 +112,5 @@ Lorentz.Item = class {
 				divEquations.style.display = "block";
 			});
 		}
-	}
-
-	createCoord(atTime) {
-		let coord = {};
-
-		coord.lorentz = {};
-
-		coord.lorentz.sol = 1;
-		coord.lorentz.time = parseFloat(atTime) * (100 / this.duration);
-		coord.lorentz.distance = 0;
-		coord.lorentz.velocity = coord.lorentz.sol * this.speed;
-		coord.lorentz.gamma = 1 / (Math.sqrt(1 - (Math.pow(coord.lorentz.velocity, 2) / Math.pow(coord.lorentz.sol, 2))));
-		coord.lorentz.newTime = coord.lorentz.gamma * (coord.lorentz.time - ((coord.lorentz.velocity * coord.lorentz.distance) / Math.pow(coord.lorentz.sol, 2)));
-		coord.lorentz.newDistance = coord.lorentz.gamma * (coord.lorentz.distance - (coord.lorentz.velocity * coord.lorentz.time)) * -1;
-
-		coord.posx = coord.lorentz.newDistance;
-		coord.posy = coord.lorentz.newTime;
-
-		coord.centerx = coord.posx;
-		coord.centery = coord.posy;
-
-		coord.fillStyle = this.fillStyle;
-
-		coord.class = "lorentzItem";
-		coord.item_id = this.item_id;
-
-		// console.log(this.speed, coord);
-
-		coord.drawPoint = atTime >= this.startTime && (atTime <= this.endTime || this.endTime === null);
-
-		return coord;
 	}
 };
