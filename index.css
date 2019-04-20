@@ -26,7 +26,7 @@ svg .centerLine {
 
 svg .guideLines {
 	stroke-width: 1px;
-	stroke:       lightgray;
+	stroke:       black;
 }
 
 svg .lightLines {
