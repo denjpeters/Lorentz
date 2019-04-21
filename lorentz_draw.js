@@ -6,6 +6,9 @@ Lorentz.Draw = class {
 
 		return Lorentz.Draw._svgLorentz;
 	};
+	static set svgLorentz(value) {
+		Lorentz.Draw._svgLorentz = document.getElementById(value);
+	}
 	static get padding() {
 		if (Lorentz.Draw._Padding === undefined) {
 			return 5;

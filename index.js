@@ -3,6 +3,8 @@ let lorentz_Items = null;
 window.onload = function () {
 	lorentz_Items = new Lorentz.Items();
 
+	Lorentz.Draw.svgLorentz = 'svgSpeedLorentz';
+
 	window.drawLorentz(86.603);
 
 	// Lorentz.Draw.svgLorentz.addEventListener("click", function (e) {
