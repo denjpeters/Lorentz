@@ -10,7 +10,7 @@ div {
 	margin-top: 0.5em;
 }
 
-#svgLorentz {
+.svgLorentz {
 	max-width: 100vh;
 	/*width:      90vw;*/
 	/*max-height: calc(100vh - 5em) !important;*/
@@ -19,35 +19,35 @@ div {
 	/*background-color: #eeeeee;*/
 }
 
-svg .centerLine {
+.svgLorentz .centerLine {
 	stroke-width: 5px;
 	stroke:       black;
 }
 
-svg .guideLines {
+.svgLorentz .guideLines {
 	stroke-width: 1px;
 	stroke:       black;
 }
 
-svg .lightLines {
+.svgLorentz .lightLines {
 	stroke-width: 5px;
 	stroke:       gold;
 }
 
-svg .staticLines {
+.svgLorentz .staticLines {
 	stroke-width: 5px;
 	stroke:       blue;
 }
 
-svg .lorentzItem {
+.svgLorentz .lorentzItem {
 	cursor: pointer;
 }
 
-svg .testRed {
+.svgLorentz .testRed {
 	fill: red;
 }
 
-svg .testBlue {
+.svgLorentz .testBlue {
 	fill: blue;
 }
 

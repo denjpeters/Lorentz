@@ -1,7 +1,7 @@
 Lorentz.Draw = class {
 	static get svgLorentz() {
 		if (Lorentz.Draw._svgLorentz === undefined) {
-			Lorentz.Draw._svgLorentz = document.getElementById("svgLorentz");
+			Lorentz.Draw._svgLorentz = document.getElementById("svgSpeedLorentz");
 		}
 
 		return Lorentz.Draw._svgLorentz;
