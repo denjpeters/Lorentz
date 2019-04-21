@@ -35,38 +35,54 @@
 	Lorentz Transformations
 </h1>
 <div>
-	<input type="range" min="-99.999" max="99.999" step="0.001" value="0" id="rngSpeed">
-</div>
-<div>
-	If you travel at <span id="txtSpeed" contenteditable="true">0</span> % the speed of light
-	<span id="spnDetails"></span>
-
-</div>
-<div>
-	When you are <span id="yourAgeAcc" contenteditable="true"></span> years old, I will be
-	<span id="myAgeAcc"></span> years old.
-</div>
-<div>
-	When I am <span id="txtDuration" contenteditable="true">10</span> years old, you will be
-	<span id="yourAge"></span> years old.
-</div>
-<div>
-	<svg id="svgSpeedLorentz" class="svgLorentz" viewBox="0 0 2000 1000" xmlns="http://www.w3.org/2000/svg">
-	</svg>
-</div>
-<div>
-	<span style="white-space: pre;"><span style="color: blue;">&#11044;</span> = 1 Year for Me&nbsp;&nbsp;&nbsp;</span>
-	<span style="white-space: pre;"><span style="color: red;">&#11044;</span> = 1 Year for You&nbsp;&nbsp;&nbsp;</span>
-	<span style="white-space: pre;"><span style="color: green;">&#11044;</span> = Your location when I am <span id="spnDuration">10</span>&nbsp;&nbsp;&nbsp;</span>
-	<span style="white-space: pre;"><strong style="color: gold;">&block;</strong> = Light Speed</span>
-</div>
-<div>
-	<a href="static.html" target="_blank">Static View</a>
-</div>
-<h1>
-	Lorentz Transformation Equation
-</h1>
-<div id="divEquations" style="font-size: 20px;">
-</div>
+	<div id="divNav" class="no-print">
+		<button type="button" data-target="divSpeed">Speed</button>
+		<br/>
+		<button type="button" data-target="divStatic">Static</button>
+		<br/>
+		<button type="button" data-target="divTwins">Twins</button>
+	</div>
+	<div class="divBody divSpeed" >
+		<div>
+			<input type="range" min="-99.999" max="99.999" step="0.001" value="0" id="rngSpeed">
+		</div>
+		<div>
+			If you travel at <span id="txtSpeed" contenteditable="true">0</span> % the speed of light
+			<span id="spnDetails"></span>
+		
+		</div>
+		<div>
+			When you are <span id="yourAgeAcc" contenteditable="true"></span> years old, I will be
+			<span id="myAgeAcc"></span> years old.
+		</div>
+		<div>
+			When I am <span id="txtDuration" contenteditable="true">10</span> years old, you will be
+			<span id="yourAge"></span> years old.
+		</div>
+		<div>
+			<svg id="svgSpeedLorentz" class="svgLorentz" viewBox="0 0 2000 1000" xmlns="http://www.w3.org/2000/svg">
+			</svg>
+		</div>
+		<div>
+			<span style="white-space: pre;"><span style="color: blue;">&#11044;</span> = 1 Year for Me&nbsp;&nbsp;&nbsp;</span>
+			<span style="white-space: pre;"><span style="color: red;">&#11044;</span> = 1 Year for You&nbsp;&nbsp;&nbsp;</span>
+			<span style="white-space: pre;"><span style="color: green;">&#11044;</span> = Your location when I am <span id="spnDuration">10</span>&nbsp;&nbsp;&nbsp;</span>
+			<span style="white-space: pre;"><strong style="color: gold;">&block;</strong> = Light Speed</span>
+		</div>
+		<div>
+			<a href="static.html" target="_blank">Static View</a>
+		</div>
+		<h1>
+			Lorentz Transformation Equation
+		</h1>
+		<div id="divEquations" style="font-size: 20px;">
+		</div>
+	</div>
+	<div class="divBody divStatic" style="display: none;">
+		Static
+	</div>
+	<div class="divBody divTwins" style="display: none;">
+		Twins
+	</div>
 </body>
 </html>

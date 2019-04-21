@@ -1,7 +1,8 @@
 Lorentz.Items = class {
-	constructor() {
+	constructor(svgLorentz) {
 		this.items = [];
 		this._duration = 10;
+		this._lorentzDraw = new Lorentz.Draw(svgLorentz);
 
 		this.drawItems();
 	}
@@ -9,10 +10,10 @@ Lorentz.Items = class {
 	populateStatic(duration = 5, increments = 0.01) {
 		for (let i = 0; i < 0.99; i+= 0.01) {
 			Lorentz.Item.itemCounterIncrement();
-			this.items[Lorentz.Item.itemCounter] = new Lorentz.Item(Lorentz.Item.itemCounter, duration, i, "", "black");
+			this.items[Lorentz.Item.itemCounter] = new Lorentz.Item(this._lorentzDraw, Lorentz.Item.itemCounter, duration, i, "", "black");
 
 			Lorentz.Item.itemCounterIncrement();
-			this.items[Lorentz.Item.itemCounter] = new Lorentz.Item(Lorentz.Item.itemCounter, duration, i * -1, "", "black");
+			this.items[Lorentz.Item.itemCounter] = new Lorentz.Item(this._lorentzDraw, Lorentz.Item.itemCounter, duration, i * -1, "", "black");
 		}
 
 		this._duration = duration;
@@ -24,9 +25,9 @@ Lorentz.Items = class {
 		this.items = [];
 
 		Lorentz.Item.itemCounterIncrement();
-		this.items[Lorentz.Item.itemCounter] = new Lorentz.Item(Lorentz.Item.itemCounter, duration, 0, "Them", "blue");
+		this.items[Lorentz.Item.itemCounter] = new Lorentz.Item(this._lorentzDraw, Lorentz.Item.itemCounter, duration, 0, "Them", "blue");
 		Lorentz.Item.itemCounterIncrement();
-		this.items[Lorentz.Item.itemCounter] = new Lorentz.Item(Lorentz.Item.itemCounter, duration, speed / 100, "Me", "red", true);
+		this.items[Lorentz.Item.itemCounter] = new Lorentz.Item(this._lorentzDraw, Lorentz.Item.itemCounter, duration, speed / 100, "Me", "red", true);
 
 		this._duration = duration;
 
@@ -34,7 +35,7 @@ Lorentz.Items = class {
 	}
 
 	drawItems() {
-		Lorentz.Draw.Overlay(this._duration);
+		this._lorentzDraw.Overlay(this._duration);
 
 		this.items.forEach(function(item) {
 			item.drawRay();

@@ -27,7 +27,7 @@ Lorentz.Item = class {
 		this._duration = newDuration;
 	}
 
-	constructor(item_id, duration, speed, name, fillStyle = "black", showAge = false, startTime = 0, endTime = null) {
+	constructor(lorentzDraw, item_id, duration, speed, name, fillStyle = "black", showAge = false, startTime = 0, endTime = null) {
 		this.speed = speed;
 		this._duration = duration;
 		this.name = name;
@@ -36,6 +36,7 @@ Lorentz.Item = class {
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.item_id = item_id;
+		this.lorentzDraw = lorentzDraw;
 	}
 
 	drawRay() {
@@ -50,12 +51,12 @@ Lorentz.Item = class {
 
 		do {
 			prevCoord = JSON.parse(JSON.stringify(coord));
-			coord = Lorentz.Draw.CreateCoord(time, this.duration, this.speed);
+			coord = this.lorentzDraw.CreateCoord(time, this.duration, this.speed);
 			coord.fillStyle = this.fillStyle;
 			coord.item_id = this.item_id;
 			coord.drawPoint = time >= this.startTime && (time <= this.endTime || this.endTime === null);
 			this.coords[time] = coord;
-			Lorentz.Draw.Circle(coord);
+			this.lorentzDraw.Circle(coord);
 			time++;
 		} while(time <= this.duration);
 
@@ -66,7 +67,7 @@ Lorentz.Item = class {
 
 			const newTime = Math.sqrt(Math.pow(newPosy, 2) - Math.pow(newPosx, 2)) / (100 / this.duration);
 
-			Lorentz.Draw.Circle({
+			this.lorentzDraw.Circle({
 				centerx: newPosx,
 				centery: newPosy,
 				fillStyle: "green"
