@@ -1,64 +1,43 @@
-let lorentz_Items = null;
+document.getElementById('txtDuration').addEventListener("focus", function (e) {
+	setTimeout(function () {
+		document.execCommand('selectAll', false, null);
+	}, 150);
+});
 
-window.onload = function () {
-	lorentz_Items = new Lorentz.Items();
+document.getElementById('txtDuration').addEventListener("blur", function (e) {
+	window.drawLorentzSpeed();
+});
 
-	Lorentz.Draw.svgLorentz = 'svgSpeedLorentz';
+document.getElementById('yourAgeAcc').addEventListener("focus", function (e) {
+	setTimeout(function () {
+		document.execCommand('selectAll', false, null);
+	}, 150);
+});
 
-	window.drawLorentz(86.603);
+document.getElementById('yourAgeAcc').addEventListener("blur", function (e) {
+	document.getElementById('txtDuration').innerText = this.innerText;
+	window.drawLorentzSpeed();
+});
 
-	// Lorentz.Draw.svgLorentz.addEventListener("click", function (e) {
-	// 	const element = e.target;
-	// 	const item_id = element.getAttribute('data-item_id');
-	//
-	// 	if (item_id !== null) {
-	// 		lorentz_Items.displayDetails(item_id);
-	// 	} else {
-	// 		lorentz_Items.displayDetails();
-	// 	}
-	// });
+document.getElementById('txtSpeed').addEventListener("focus", function (e) {
+	setTimeout(function () {
+		document.execCommand('selectAll', false, null);
+	}, 150);
+});
 
-	document.getElementById('txtDuration').addEventListener("focus", function (e) {
-		setTimeout(function () {
-			document.execCommand('selectAll', false, null);
-		}, 150);
-	});
+document.getElementById('txtSpeed').addEventListener("blur", function (e) {
+	window.drawLorentzSpeed(parseFloat(this.innerText));
+});
 
-	document.getElementById('txtDuration').addEventListener("blur", function (e) {
-		window.drawLorentz();
-	});
+document.getElementById('rngSpeed').addEventListener("input", function (e) {
+	window.drawLorentzSpeed(parseFloat(this.value));
+});
 
-	document.getElementById('yourAgeAcc').addEventListener("focus", function (e) {
-		setTimeout(function () {
-			document.execCommand('selectAll', false, null);
-		}, 150);
-	});
+document.getElementById('rngSpeed').addEventListener("dblclick", function (e) {
+	window.drawLorentzSpeed(parseFloat(0));
+});
 
-	document.getElementById('yourAgeAcc').addEventListener("blur", function (e) {
-		document.getElementById('txtDuration').innerText = this.innerText;
-		window.drawLorentz();
-	});
-
-	document.getElementById('txtSpeed').addEventListener("focus", function (e) {
-		setTimeout(function () {
-			document.execCommand('selectAll', false, null);
-		}, 150);
-	});
-
-	document.getElementById('txtSpeed').addEventListener("blur", function (e) {
-		window.drawLorentz(parseFloat(this.innerText));
-	});
-
-	document.getElementById('rngSpeed').addEventListener("input", function (e) {
-		window.drawLorentz(parseFloat(this.value));
-	});
-
-	document.getElementById('rngSpeed').addEventListener("dblclick", function (e) {
-		window.drawLorentz(parseFloat(0));
-	});
-};
-
-window.drawLorentz = function (speed) {
+window.drawLorentzSpeed = function (speed) {
 	if (speed === undefined) {
 		speed = parseFloat(document.getElementById('txtSpeed').innerText);
 	}
@@ -70,10 +49,10 @@ window.drawLorentz = function (speed) {
 
 	const duration = parseInt(document.getElementById('txtDuration').innerText);
 
-	document.getElementById('txtDuration').innerText = duration;
-	document.getElementById('spnDuration').innerText = duration;
+	document.getElementById('txtDuration').innerText = duration.toFixed(0);
+	document.getElementById('spnDuration').innerText = duration.toFixed(0);
 
-	document.getElementById('yourAgeAcc').innerText = duration;
+	document.getElementById('yourAgeAcc').innerText = duration.toFixed(0);
 
-	lorentz_Items.populatePoint(speed, duration);
+	lorentz_Items_Speed.populatePoint(speed, duration);
 };

@@ -1,77 +1,63 @@
-let lorentz_Items = null;
+let lorentz_Items_Speed = null;
+let navButtons = document.querySelectorAll("#divNav button");
+let divBodys = document.querySelectorAll(".divBody");
 
 window.onload = function () {
-	lorentz_Items = new Lorentz.Items('svgSpeedLorentz');
+	lorentz_Items_Speed = new Lorentz.Items('svgSpeedLorentz');
 
-	window.drawLorentz(86.603);
+	window.drawLorentzSpeed(86.603);
 
-	// Lorentz.Draw.svgLorentz.addEventListener("click", function (e) {
-	// 	const element = e.target;
-	// 	const item_id = element.getAttribute('data-item_id');
-	//
-	// 	if (item_id !== null) {
-	// 		lorentz_Items.displayDetails(item_id);
-	// 	} else {
-	// 		lorentz_Items.displayDetails();
-	// 	}
-	// });
-
-	document.getElementById('txtDuration').addEventListener("focus", function (e) {
-		setTimeout(function () {
-			document.execCommand('selectAll', false, null);
-		}, 150);
-	});
-
-	document.getElementById('txtDuration').addEventListener("blur", function (e) {
-		window.drawLorentz();
-	});
-
-	document.getElementById('yourAgeAcc').addEventListener("focus", function (e) {
-		setTimeout(function () {
-			document.execCommand('selectAll', false, null);
-		}, 150);
-	});
-
-	document.getElementById('yourAgeAcc').addEventListener("blur", function (e) {
-		document.getElementById('txtDuration').innerText = this.innerText;
-		window.drawLorentz();
-	});
-
-	document.getElementById('txtSpeed').addEventListener("focus", function (e) {
-		setTimeout(function () {
-			document.execCommand('selectAll', false, null);
-		}, 150);
-	});
-
-	document.getElementById('txtSpeed').addEventListener("blur", function (e) {
-		window.drawLorentz(parseFloat(this.innerText));
-	});
-
-	document.getElementById('rngSpeed').addEventListener("input", function (e) {
-		window.drawLorentz(parseFloat(this.value));
-	});
-
-	document.getElementById('rngSpeed').addEventListener("dblclick", function (e) {
-		window.drawLorentz(parseFloat(0));
-	});
+	drawPage();
 };
 
-window.drawLorentz = function (speed) {
-	if (speed === undefined) {
-		speed = parseFloat(document.getElementById('txtSpeed').innerText);
+function drawPage(targetDiv) {
+	if (targetDiv === undefined) {
+		targetDiv = getCookie('tabSet', 'divSpeed');
 	}
-	if (speed >= 100) speed = 99.999;
-	if (speed <= -100) speed = -99.999;
 
-	document.getElementById('txtSpeed').innerText = speed;
-	document.getElementById('rngSpeed').value = speed;
+	setCookie('tabSet', targetDiv);
 
-	const duration = parseInt(document.getElementById('txtDuration').innerText);
+	for (let i=0; i<navButtons.length; i++) {
+		if (navButtons[i].getAttribute("data-target") === targetDiv) {
+			navButtons[i].style.backgroundColor = "lightblue";
+		} else {
+			navButtons[i].style.backgroundColor = "white";
+		}
+	}
 
-	document.getElementById('txtDuration').innerText = duration;
-	document.getElementById('spnDuration').innerText = duration;
+	for (let i=0; i<divBodys.length; i++) {
+		if (divBodys[i].classList.contains(targetDiv)) {
+			divBodys[i].style.display = "block";
+		} else {
+			divBodys[i].style.display = "none";
+		}
+	}
+}
 
-	document.getElementById('yourAgeAcc').innerText = duration;
+function setCookie(cname, cvalue, exdays = 10) {
+	let d = new Date();
+	d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+	let expires = "expires=" + d.toUTCString();
+	document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
 
-	lorentz_Items.populatePoint(speed, duration);
-};
+function getCookie(cname, cdefault = "") {
+	let name = cname + "=";
+	let ca = document.cookie.split(';');
+	for (let i = 0; i < ca.length; i++) {
+		let c = ca[i];
+		while (c.charAt(0) === ' ') {
+			c = c.substring(1);
+		}
+		if (c.indexOf(name) === 0) {
+			return c.substring(name.length, c.length);
+		}
+	}
+	return cdefault;
+}
+
+for (let i=0; i<navButtons.length; i++) {
+	navButtons[i].addEventListener("click", function (e) {
+		drawPage(this.getAttribute("data-target"));
+	});
+}

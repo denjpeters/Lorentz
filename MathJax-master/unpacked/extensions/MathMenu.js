@@ -42,7 +42,7 @@
       [["MathMenu",id]].concat([].slice.call(arguments,1))
     );
   };
-  
+
   var isArray = MathJax.Object.isArray;
 
   var isPC = HUB.Browser.isPC, isMSIE = HUB.Browser.isMSIE, isIE9 = ((document.documentMode||0) > 8);
@@ -924,7 +924,7 @@
 
   /*************************************************************/
   /*
-   *  A menu item that is one of several radio buttons
+   *  A menu item that is one of several radio navButtons
    */
   MENU.ITEM.RADIO = MENU.ENTRY.Subclass({
     variable: null,     // the variable name
@@ -1249,7 +1249,7 @@
               if (jax) jax.config.scale = scale;
             }
             MENU.cookie.scale = HUB.config.scale = scale;
-            MENU.saveCookie(); 
+            MENU.saveCookie();
             HUB.Queue(["Rerender",HUB]);
           }
         } else {alert(_("NonZeroScale","The scale should not be zero"))}
@@ -1346,7 +1346,7 @@
                  "not display properly."]
     }
   };
-  
+
   /*
    *  Toggle assistive MML settings
    */

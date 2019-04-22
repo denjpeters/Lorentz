@@ -1,4 +1,4 @@
-let lorentz_Items = null;
+let lorentz_Items_Speed = null;
 
 window.onload = function () {
 	const duration = 10;
