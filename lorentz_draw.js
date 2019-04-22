@@ -10,27 +10,33 @@ Lorentz.Draw = class {
 
 		return this._svgLorentz;
 	};
+
 	set svgLorentz(value) {
 		this._svgLorentz = document.getElementById(value);
 	};
+
 	get padding() {
 		if (this._Padding === undefined) {
 			return 5;
 		}
 		return this._Padding;
 	};
+
 	set padding(value) {
 		this._Padding = value;
 	}
+
 	get fullWidth() {
 		if (this._fullWidth === undefined) {
 			return true;
 		}
 		return this._fullWidth;
 	};
+
 	set fullWidth(value) {
 		this._fullWidth = value;
 	}
+
 	get frame() {
 		return {
 			width: this.svgLorentz.viewBox.baseVal.width * (1 - (this.padding / 100)),
@@ -52,11 +58,11 @@ Lorentz.Draw = class {
 			return false;
 		}
 
-		const newRectangle = document.createElementNS('http://www.w3.org/2000/svg','rect');
-		newRectangle.setAttribute('x',coords.x);
-		newRectangle.setAttribute('y',coords.y);
-		newRectangle.setAttribute('width',coords.width);
-		newRectangle.setAttribute('height',coords.height);
+		const newRectangle = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+		newRectangle.setAttribute('x', coords.x);
+		newRectangle.setAttribute('y', coords.y);
+		newRectangle.setAttribute('width', coords.width);
+		newRectangle.setAttribute('height', coords.height);
 		newRectangle.setAttribute('class', coords.class);
 		this.svgLorentz.appendChild(newRectangle);
 
@@ -121,20 +127,20 @@ Lorentz.Draw = class {
 		parentElement.appendChild(emptySvg);
 		this._svgLorentz = emptySvg;
 
-		this.Line({x: 0, y:0, tox: 0, toy:100, class: "centerLine"});
+		this.Line({x: 0, y: 0, tox: 0, toy: 100, class: "centerLine"});
 
-		for (let i = this.DurationSize; Math.round(i) <= 100; i+=this.DurationSize) {
-			this.Line({x: i * -1, y:i, tox: i, toy:i, class: "guideLines"});
-			this.Line({x: i, y:i, tox: i, toy:100, class: "guideLines"});
-			this.Line({x: i * -1, y:i, tox: i * -1, toy:100, class: "guideLines"});
+		for (let i = this.DurationSize; Math.round(i) <= 100; i += this.DurationSize) {
+			this.Line({x: i * -1, y: i, tox: i, toy: i, class: "guideLines"});
+			this.Line({x: i, y: i, tox: i, toy: 100, class: "guideLines"});
+			this.Line({x: i * -1, y: i, tox: i * -1, toy: 100, class: "guideLines"});
 		}
 
-		this.Line({x: 0, y:0, tox: 100, toy:100, class: "lightLines"});
-		this.Line({x: 0, y:0, tox: -100, toy:100, class: "lightLines"});
+		this.Line({x: 0, y: 0, tox: 100, toy: 100, class: "lightLines"});
+		this.Line({x: 0, y: 0, tox: -100, toy: 100, class: "lightLines"});
 	};
 
-	Padding() {
-		let newRectangle = document.createElementNS('http://www.w3.org/2000/svg','rect');
+	Padding(addLabels = 10) {
+		let newRectangle = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
 		newRectangle.setAttribute('x', 0);
 		newRectangle.setAttribute('y', 0);
 		newRectangle.setAttribute('width', this.svgLorentz.viewBox.baseVal.width);
@@ -142,7 +148,7 @@ Lorentz.Draw = class {
 		newRectangle.setAttribute('class', 'padding');
 		this.svgLorentz.appendChild(newRectangle);
 
-		newRectangle = document.createElementNS('http://www.w3.org/2000/svg','rect');
+		newRectangle = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
 		newRectangle.setAttribute('x', 0);
 		newRectangle.setAttribute('y', 0);
 		newRectangle.setAttribute('width', this.frame.xoffset - 1);
@@ -150,7 +156,7 @@ Lorentz.Draw = class {
 		newRectangle.setAttribute('class', 'padding');
 		this.svgLorentz.appendChild(newRectangle);
 
-		newRectangle = document.createElementNS('http://www.w3.org/2000/svg','rect');
+		newRectangle = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
 		newRectangle.setAttribute('x', 0);
 		newRectangle.setAttribute('y', this.svgLorentz.viewBox.baseVal.height - this.frame.yoffset + 1);
 		newRectangle.setAttribute('width', this.svgLorentz.viewBox.baseVal.width);
@@ -158,20 +164,35 @@ Lorentz.Draw = class {
 		newRectangle.setAttribute('class', 'padding');
 		this.svgLorentz.appendChild(newRectangle);
 
-		newRectangle = document.createElementNS('http://www.w3.org/2000/svg','rect');
+		newRectangle = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
 		newRectangle.setAttribute('x', this.svgLorentz.viewBox.baseVal.width - this.frame.xoffset + 1);
 		newRectangle.setAttribute('y', 0);
 		newRectangle.setAttribute('width', this.frame.xoffset - 1);
 		newRectangle.setAttribute('height', this.svgLorentz.viewBox.baseVal.height);
 		newRectangle.setAttribute('class', 'padding');
 		this.svgLorentz.appendChild(newRectangle);
+
+		if (addLabels > 0) {
+			let newText = null;
+			let textNode = null;
+
+			for (let i = 0; i <= 100; i += addLabels) {
+				newText = document.createElementNS('http://www.w3.org/2000/svg', "text");
+				newText.setAttributeNS(null, "x", this.frame.xoffset + (this.frame.width * (i / addLabels / 10)));
+				newText.setAttributeNS(null, "y", this.frame.yoffset * .75);
+				newText.setAttributeNS(null, "text-anchor", "middle");
+				textNode = document.createTextNode(i + "%");
+				newText.appendChild(textNode);
+				this.svgLorentz.appendChild(newText);
+			}
+		}
 	};
 
 	Curve(atTime, duration) {
 		const speedInterval = 0.01;
 		let prevCoord = this.CreateCoord(atTime, duration, 0);
 
-		for (let i=0; i<0.999; i+=speedInterval) {
+		for (let i = 0; i < 0.999; i += speedInterval) {
 			let nextCoord = this.CreateCoord(atTime, duration, i);
 			if (this._ValidY(nextCoord.centery)) {
 				this.Line({
