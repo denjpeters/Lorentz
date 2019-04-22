@@ -61,17 +61,15 @@ Lorentz.Item = class {
 		} while(time <= this.duration);
 
 		if (this.showAge) {
-			const newPosy = 100;
-			const percentOfY = newPosy / coord.posy;
-			const newPosx = coord.posx * percentOfY;
-
-			const newTime = Math.sqrt(Math.pow(newPosy, 2) - Math.pow(newPosx, 2)) / (100 / this.duration);
-
+			const realCoord = this.lorentzDraw.CreateCoordRealTime(this.duration, this.duration, this.speed);
 			this.lorentzDraw.Circle({
-				centerx: newPosx,
-				centery: newPosy,
+				centerx: realCoord.centerx,
+				centery: realCoord.centery,
 				fillStyle: "green"
 			});
+
+			const newTime = Math.sqrt(Math.pow(realCoord.centery, 2) - Math.pow(realCoord.centerx, 2)) / (100 / this.duration);
+
 			document.getElementById('yourAge').innerText = newTime.toFixed(3);
 
 			const deltaT = this.duration / Math.sqrt(1 - (Math.pow(this.speed, 2) / Math.pow(1, 2)));

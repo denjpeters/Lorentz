@@ -1,5 +1,6 @@
 let lorentz_Items_Speed = null;
 let lorentz_Draw_Static = null;
+let lorentz_Draw_Static_Half = null;
 const navButtons = document.querySelectorAll("#divNav button");
 const divBodys = document.querySelectorAll(".divBody");
 const contenteditables = document.querySelectorAll('[contenteditable="true"]');
@@ -7,9 +8,11 @@ const contenteditables = document.querySelectorAll('[contenteditable="true"]');
 window.onload = function () {
 	lorentz_Items_Speed = new Lorentz.Items('svgSpeedLorentz');
 	lorentz_Draw_Static = new Lorentz.Draw('svgStaticLorentz');
+	lorentz_Draw_Static_Half = new Lorentz.Draw('svgStaticHalfLorentz');
 
 	window.drawLorentzSpeed(86.603);
 	window.drawLorentzStatic();
+	window.drawLorentzStaticHalf();
 
 	drawPage();
 };

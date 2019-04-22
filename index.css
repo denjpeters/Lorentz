@@ -76,6 +76,10 @@ body > div {
 	fill: blue;
 }
 
+.svgLorentz .padding {
+	fill: white;
+}
+
 @media (max-width: 767.98px) {
 	#rngSpeed {
 		display: none;
