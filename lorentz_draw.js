@@ -109,7 +109,15 @@ Lorentz.Draw = class {
 			newLine.setAttribute('y1', coords.y);
 			newLine.setAttribute('x2', coords.tox);
 			newLine.setAttribute('y2', coords.toy);
-			newLine.setAttribute('class', coords.class);
+			if (coords.class) {
+				newLine.setAttribute('class', coords.class);
+			}
+			if (coords.stroke) {
+				newLine.setAttribute('stroke', coords.stroke);
+			}
+			if (coords.stroke_width) {
+				newLine.setAttribute('stroke-width', coords.stroke_width);
+			}
 			this.svgLorentz.appendChild(newLine);
 		}
 	};

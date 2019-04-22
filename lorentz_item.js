@@ -46,22 +46,44 @@ Lorentz.Item = class {
 		}
 
 		let time = 0;
+		let lastGoodCoord = null;
 		let prevCoord = null;
 		let coord = null;
 
 		do {
-			prevCoord = JSON.parse(JSON.stringify(coord));
+			lastGoodCoord = JSON.parse(JSON.stringify(prevCoord));
 			coord = this.lorentzDraw.CreateCoord(time, this.duration, this.speed);
 			coord.fillStyle = this.fillStyle;
 			coord.item_id = this.item_id;
-			coord.drawPoint = time >= this.startTime && (time <= this.endTime || this.endTime === null);
+			coord.drawPoint = time >= this.startTime && (time <= this.endTime || this.endTime === null) && Math.round(coord.centery) <= 100;
 			this.coords[time] = coord;
+			if (prevCoord && coord.drawPoint) {
+				const lineCoord = JSON.parse(JSON.stringify({
+					x: prevCoord.centerx,
+					y: prevCoord.centery,
+					tox: coord.centerx,
+					toy: coord.centery,
+					stroke: coord.fillStyle,
+					stroke_width: 1
+				}));
+				this.lorentzDraw.Line(lineCoord);
+			}
+			prevCoord = JSON.parse(JSON.stringify(coord));
 			this.lorentzDraw.Circle(coord);
 			time++;
-		} while(time <= this.duration);
+		} while(time <= this.duration && coord.drawPoint);
 
 		if (this.showAge) {
 			const realCoord = this.lorentzDraw.CreateCoordRealTime(this.duration, this.duration, this.speed);
+			const lineCoord = JSON.parse(JSON.stringify({
+				x: lastGoodCoord.centerx,
+				y: lastGoodCoord.centery,
+				tox: realCoord.centerx,
+				toy: realCoord.centery,
+				stroke: coord.fillStyle,
+				stroke_width: 1
+			}));
+			this.lorentzDraw.Line(lineCoord);
 			this.lorentzDraw.Circle({
 				centerx: realCoord.centerx,
 				centery: realCoord.centery,
