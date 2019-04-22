@@ -1,4 +1,5 @@
 let lorentz_Items_Speed = null;
+let lorentz_Draw_Static = null;
 let navButtons = document.querySelectorAll("#divNav button");
 let divBodys = document.querySelectorAll(".divBody");
 
@@ -6,6 +7,7 @@ window.onload = function () {
 	lorentz_Items_Speed = new Lorentz.Items('svgSpeedLorentz');
 
 	window.drawLorentzSpeed(86.603);
+	window.drawLorentzStatic();
 
 	drawPage();
 };
