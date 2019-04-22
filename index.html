@@ -62,8 +62,17 @@
 		</div>
 	</div>
 	<div class="divBody divStatic" style="display: none;">
-		<svg id="svgStaticLorentz" class="svgLorentz" viewBox="0 0 2000 1000" xmlns="http://www.w3.org/2000/svg">
-		</svg>
+		<div class="no-print">
+			Duration: <span id="spnStaticDuration" contenteditable="true">5</span>
+			Interval: <span id="spnStaticInterval" contenteditable="true">1</span>
+		</div>
+		<div class="no-print">
+			&nbsp;
+		</div>
+		<div>
+			<svg id="svgStaticLorentz" class="svgLorentz" viewBox="0 0 2000 1000" xmlns="http://www.w3.org/2000/svg">
+			</svg>
+		</div>
 	</div>
 	<div class="divBody divTwins" style="display: none;">
 		Twins
@@ -86,6 +95,7 @@
 </script>
 <script type="text/x-mathjax-config">
         MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+
 </script>
 <script type="text/javascript" async src='MathJax-master/MathJax.js?config=TeX-MML-AM_CHTML'></script>
 

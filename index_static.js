@@ -1,8 +1,6 @@
 window.drawLorentzStatic = function() {
-	const duration = 10;
-	const interval = 2;
-
-	lorentz_Draw_Static = new Lorentz.Draw('svgStaticLorentz');
+	const duration = parseInt(document.getElementById('spnStaticDuration').innerText);
+	const interval = parseInt(document.getElementById('spnStaticInterval').innerText);
 
 	lorentz_Draw_Static.padding = 0;
 
@@ -12,3 +10,11 @@ window.drawLorentzStatic = function() {
 		lorentz_Draw_Static.Curve(i, duration);
 	}
 };
+
+document.getElementById('spnStaticDuration').addEventListener("blur", function (e) {
+	window.drawLorentzStatic();
+});
+
+document.getElementById('spnStaticInterval').addEventListener("blur", function (e) {
+	window.drawLorentzStatic();
+});

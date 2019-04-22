@@ -1,10 +1,12 @@
 let lorentz_Items_Speed = null;
 let lorentz_Draw_Static = null;
-let navButtons = document.querySelectorAll("#divNav button");
-let divBodys = document.querySelectorAll(".divBody");
+const navButtons = document.querySelectorAll("#divNav button");
+const divBodys = document.querySelectorAll(".divBody");
+const contenteditables = document.querySelectorAll('[contenteditable="true"]');
 
 window.onload = function () {
 	lorentz_Items_Speed = new Lorentz.Items('svgSpeedLorentz');
+	lorentz_Draw_Static = new Lorentz.Draw('svgStaticLorentz');
 
 	window.drawLorentzSpeed(86.603);
 	window.drawLorentzStatic();
@@ -61,5 +63,13 @@ function getCookie(cname, cdefault = "") {
 for (let i=0; i<navButtons.length; i++) {
 	navButtons[i].addEventListener("click", function (e) {
 		drawPage(this.getAttribute("data-target"));
+	});
+}
+
+for (let i=0; i<contenteditables.length; i++) {
+	contenteditables[i].addEventListener("focus", function (e) {
+		setTimeout(function () {
+			document.execCommand('selectAll', false, null);
+		});
 	});
 }

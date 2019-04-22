@@ -1,28 +1,10 @@
-document.getElementById('txtDuration').addEventListener("focus", function (e) {
-	setTimeout(function () {
-		document.execCommand('selectAll', false, null);
-	}, 150);
-});
-
 document.getElementById('txtDuration').addEventListener("blur", function (e) {
 	window.drawLorentzSpeed();
-});
-
-document.getElementById('yourAgeAcc').addEventListener("focus", function (e) {
-	setTimeout(function () {
-		document.execCommand('selectAll', false, null);
-	}, 150);
 });
 
 document.getElementById('yourAgeAcc').addEventListener("blur", function (e) {
 	document.getElementById('txtDuration').innerText = this.innerText;
 	window.drawLorentzSpeed();
-});
-
-document.getElementById('txtSpeed').addEventListener("focus", function (e) {
-	setTimeout(function () {
-		document.execCommand('selectAll', false, null);
-	}, 150);
 });
 
 document.getElementById('txtSpeed').addEventListener("blur", function (e) {
