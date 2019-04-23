@@ -149,34 +149,34 @@ Lorentz.Draw = class {
 
 	Padding(addLabels = 10) {
 		let newRectangle = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-		newRectangle.setAttribute('x', 0);
-		newRectangle.setAttribute('y', 0);
-		newRectangle.setAttribute('width', this.svgLorentz.viewBox.baseVal.width);
-		newRectangle.setAttribute('height', this.frame.yoffset - 1);
+		newRectangle.setAttribute('x', -1);
+		newRectangle.setAttribute('y', -1);
+		newRectangle.setAttribute('width', this.svgLorentz.viewBox.baseVal.width + 2);
+		newRectangle.setAttribute('height', this.frame.yoffset);
 		newRectangle.setAttribute('class', 'padding');
 		this.svgLorentz.appendChild(newRectangle);
 
 		newRectangle = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-		newRectangle.setAttribute('x', 0);
-		newRectangle.setAttribute('y', 0);
-		newRectangle.setAttribute('width', this.frame.xoffset - 1);
-		newRectangle.setAttribute('height', this.svgLorentz.viewBox.baseVal.height);
+		newRectangle.setAttribute('x', -1);
+		newRectangle.setAttribute('y', -1);
+		newRectangle.setAttribute('width', this.frame.xoffset);
+		newRectangle.setAttribute('height', this.svgLorentz.viewBox.baseVal.height + 2);
 		newRectangle.setAttribute('class', 'padding');
 		this.svgLorentz.appendChild(newRectangle);
 
 		newRectangle = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-		newRectangle.setAttribute('x', 0);
-		newRectangle.setAttribute('y', this.svgLorentz.viewBox.baseVal.height - this.frame.yoffset + 1);
-		newRectangle.setAttribute('width', this.svgLorentz.viewBox.baseVal.width);
-		newRectangle.setAttribute('height', this.frame.yoffset - 1);
+		newRectangle.setAttribute('x', -1);
+		newRectangle.setAttribute('y', (this.svgLorentz.viewBox.baseVal.height + 1) - this.frame.yoffset);
+		newRectangle.setAttribute('width', this.svgLorentz.viewBox.baseVal.width + 2);
+		newRectangle.setAttribute('height', this.frame.yoffset);
 		newRectangle.setAttribute('class', 'padding');
 		this.svgLorentz.appendChild(newRectangle);
 
 		newRectangle = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-		newRectangle.setAttribute('x', this.svgLorentz.viewBox.baseVal.width - this.frame.xoffset + 1);
-		newRectangle.setAttribute('y', 0);
-		newRectangle.setAttribute('width', this.frame.xoffset - 1);
-		newRectangle.setAttribute('height', this.svgLorentz.viewBox.baseVal.height);
+		newRectangle.setAttribute('x', (this.svgLorentz.viewBox.baseVal.width + 1) - this.frame.xoffset);
+		newRectangle.setAttribute('y', -1);
+		newRectangle.setAttribute('width', this.frame.xoffset);
+		newRectangle.setAttribute('height', this.svgLorentz.viewBox.baseVal.height + 2);
 		newRectangle.setAttribute('class', 'padding');
 		this.svgLorentz.appendChild(newRectangle);
 
