@@ -190,7 +190,7 @@ Lorentz.Draw = class {
 						newText = document.createElementNS('http://www.w3.org/2000/svg', "text");
 						newText.setAttributeNS(null, "x", this.frame.xoffset + (this.frame.width / 2) + (this.frame.width * (i / addLabels / 10)));
 						newText.setAttributeNS(null, "y", this.frame.yoffset * .75);
-						newText.setAttributeNS(null, "text-anchor", "middle");
+						newText.setAttributeNS(null, "class", "percentageFont");
 						textNode = document.createTextNode(i + "%");
 						newText.appendChild(textNode);
 						this.svgLorentz.appendChild(newText);
@@ -198,7 +198,7 @@ Lorentz.Draw = class {
 						newText = document.createElementNS('http://www.w3.org/2000/svg', "text");
 						newText.setAttributeNS(null, "x", this.frame.xoffset + (this.frame.width / 2) - (this.frame.width * (i / addLabels / 20)));
 						newText.setAttributeNS(null, "y", this.frame.yoffset * .75);
-						newText.setAttributeNS(null, "text-anchor", "middle");
+						newText.setAttributeNS(null, "class", "percentageFont");
 						textNode = document.createTextNode(i + "%");
 						newText.appendChild(textNode);
 						this.svgLorentz.appendChild(newText);
@@ -206,7 +206,7 @@ Lorentz.Draw = class {
 						newText = document.createElementNS('http://www.w3.org/2000/svg', "text");
 						newText.setAttributeNS(null, "x", this.frame.xoffset + (this.frame.width / 2) + (this.frame.width * (i / addLabels / 20)));
 						newText.setAttributeNS(null, "y", this.frame.yoffset * .75);
-						newText.setAttributeNS(null, "text-anchor", "middle");
+						newText.setAttributeNS(null, "class", "percentageFont");
 						textNode = document.createTextNode(i + "%");
 						newText.appendChild(textNode);
 						this.svgLorentz.appendChild(newText);
@@ -215,7 +215,7 @@ Lorentz.Draw = class {
 					newText = document.createElementNS('http://www.w3.org/2000/svg', "text");
 					newText.setAttributeNS(null, "x", this.frame.xoffset + (this.frame.width * (i / addLabels / 10)));
 					newText.setAttributeNS(null, "y", this.frame.yoffset * .75);
-					newText.setAttributeNS(null, "text-anchor", "middle");
+					newText.setAttributeNS(null, "class", "percentageFont");
 					textNode = document.createTextNode(i + "%");
 					newText.appendChild(textNode);
 					this.svgLorentz.appendChild(newText);
