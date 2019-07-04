@@ -26,6 +26,7 @@ body > div {
 
 .svgLorentz {
   max-width: 100vh;
+  overflow: hidden;
   /*width:      90vw;*/
   /*max-height: calc(100vh - 5em) !important;*/
   /*height:     50vw;*/
@@ -51,13 +52,6 @@ body > div {
     fill: blue; }
   .svgLorentz .padding {
     fill: white; }
-
-.svgLorentz .percentageFont {
-	text-anchor: middle;
-	font-size: 20px;
-	font-weight: bold;
-	font-family: sans-serif;
-}
 
 @media (max-width: 767.98px) {
   #rngSpeed {
