@@ -1,7 +1,11 @@
 var Lorentz;
 (function (Lorentz) {
-    class Item {
-        constructor(lorentzDraw, item_id, duration, speed, name, fillStyle = "black", showAge = false, startTime = 0, endTime = null) {
+    var Item = /** @class */ (function () {
+        function Item(lorentzDraw, item_id, duration, speed, name, fillStyle, showAge, startTime, endTime) {
+            if (fillStyle === void 0) { fillStyle = "black"; }
+            if (showAge === void 0) { showAge = false; }
+            if (startTime === void 0) { startTime = 0; }
+            if (endTime === void 0) { endTime = null; }
             this._coords = [];
             this._duration = 10;
             this.speed = 0;
@@ -22,31 +26,43 @@ var Lorentz;
             this.item_id = item_id;
             this.lorentzDraw = lorentzDraw;
         }
-        static get itemCounter() {
-            return Lorentz.Item._itemCounter;
-        }
-        get coords() {
-            return this._coords;
-        }
-        static itemCounterIncrement() {
+        Object.defineProperty(Item, "itemCounter", {
+            get: function () {
+                return Lorentz.Item._itemCounter;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Item.prototype, "coords", {
+            get: function () {
+                return this._coords;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Item.itemCounterIncrement = function () {
             Lorentz.Item._itemCounter = Lorentz.Item.itemCounter + 1;
-        }
+        };
         ;
-        get duration() {
-            return this._duration;
-        }
-        set duration(newDuration) {
-            this._duration = newDuration;
-        }
-        drawRay() {
+        Object.defineProperty(Item.prototype, "duration", {
+            get: function () {
+                return this._duration;
+            },
+            set: function (newDuration) {
+                this._duration = newDuration;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Item.prototype.drawRay = function () {
             if (this.speed < -1 || this.speed > 1) {
                 console.log("Error!  Nothing can travel faster than the speed of light!");
                 return false;
             }
-            let time = 0;
-            let lastGoodCoord = null;
-            let prevCoord = null;
-            let coord = null;
+            var time = 0;
+            var lastGoodCoord = null;
+            var prevCoord = null;
+            var coord = null;
             do {
                 lastGoodCoord = JSON.parse(JSON.stringify(prevCoord));
                 coord = this.lorentzDraw.CreateCoord(time, this.duration, this.speed);
@@ -55,7 +71,7 @@ var Lorentz;
                 coord.drawPoint = time >= this.startTime && (time <= this.endTime || this.endTime === null) && Math.round(coord.centery) <= 100;
                 this.coords[time] = coord;
                 if (prevCoord && coord.drawPoint) {
-                    const lineCoord = JSON.parse(JSON.stringify({
+                    var lineCoord = JSON.parse(JSON.stringify({
                         x: prevCoord.centerx,
                         y: prevCoord.centery,
                         tox: coord.centerx,
@@ -70,8 +86,8 @@ var Lorentz;
                 time++;
             } while (time <= this.duration && coord.drawPoint);
             if (this.showAge) {
-                const realCoord = this.lorentzDraw.CreateCoordRealTime(this.duration, this.duration, this.speed);
-                const lineCoord = JSON.parse(JSON.stringify({
+                var realCoord = this.lorentzDraw.CreateCoordRealTime(this.duration, this.duration, this.speed);
+                var lineCoord = JSON.parse(JSON.stringify({
                     x: lastGoodCoord.centerx,
                     y: lastGoodCoord.centery,
                     tox: realCoord.centerx,
@@ -85,11 +101,11 @@ var Lorentz;
                     centery: realCoord.centery,
                     fillStyle: "green"
                 });
-                const newTime = Math.sqrt(Math.pow(realCoord.centery, 2) - Math.pow(realCoord.centerx, 2)) / (100 / this.duration);
+                var newTime = Math.sqrt(Math.pow(realCoord.centery, 2) - Math.pow(realCoord.centerx, 2)) / (100 / this.duration);
                 document.getElementById('yourAge').innerText = newTime.toFixed(3);
-                const deltaT = this.duration / Math.sqrt(1 - (Math.pow(this.speed, 2) / Math.pow(1, 2)));
+                var deltaT = this.duration / Math.sqrt(1 - (Math.pow(this.speed, 2) / Math.pow(1, 2)));
                 document.getElementById('myAgeAcc').innerText = deltaT.toFixed(3);
-                let equations = "\\begin{aligned}t'&=\\textstyle \\left(t-{\\frac {vx}{c^{2}}}\\right)/\\sqrt {1-{\\frac {v^{2}}{c^{2}}}}\\end{aligned}"; // with gamma Definition
+                var equations = "\\begin{aligned}t'&=\\textstyle \\left(t-{\\frac {vx}{c^{2}}}\\right)/\\sqrt {1-{\\frac {v^{2}}{c^{2}}}}\\end{aligned}"; // with gamma Definition
                 equations += "\\begin{aligned}t'&=my\\ future\\ age=?\\end{aligned}";
                 equations += "\\begin{aligned}t&=your\\ future\\ age=" + this.duration + "\\end{aligned}";
                 equations += "\\begin{aligned}v&=your\\ velocity=" + coord.lorentz.velocity.toFixed(3) + "\\end{aligned}";
@@ -104,17 +120,18 @@ var Lorentz;
                 // equations += "\\begin{aligned}t&=\\textstyle " + (this.duration - ((coord.lorentz.velocity * coord.lorentz.distance) / Math.pow(coord.lorentz.sol, 2))).toFixed(3) + "\\ *\\ " + Math.sqrt(1 - (Math.pow(coord.lorentz.velocity, 2) / Math.pow(coord.lorentz.sol, 2))).toFixed(3) + "\\end{aligned}"; // with values populated
                 //
                 // equations += "\\begin{aligned}t&=\\textstyle " + ((this.duration - ((coord.lorentz.velocity * -1 * coord.lorentz.distance) / Math.pow(coord.lorentz.sol, 2))) * Math.sqrt(1 - (Math.pow(coord.lorentz.velocity, 2) / Math.pow(coord.lorentz.sol, 2)))).toFixed(3) + "=your\\ future\\ age\\ when\\ I\\ am\\ " + this.duration + "\\end{aligned}"; // with values populated
-                const divEquations = document.getElementById('divEquations');
-                divEquations.style.display = "none";
-                divEquations.innerHTML = equations;
+                var divEquations_1 = document.getElementById('divEquations');
+                divEquations_1.style.display = "none";
+                divEquations_1.innerHTML = equations;
                 MathJax.Hub.Queue(["Typeset", MathJax.Hub, "divEquations"]);
                 MathJax.Hub.Queue(function () {
-                    divEquations.style.display = "block";
+                    divEquations_1.style.display = "block";
                 });
             }
-        }
-    }
-    Item._itemCounter = 0;
+        };
+        Item._itemCounter = 0;
+        return Item;
+    }());
     Lorentz.Item = Item;
 })(Lorentz || (Lorentz = {}));
 //# sourceMappingURL=lorentz_item.js.map

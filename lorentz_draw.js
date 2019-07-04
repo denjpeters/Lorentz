@@ -1,7 +1,7 @@
 var Lorentz;
 (function (Lorentz) {
-    class Draw {
-        constructor(svgLorentz) {
+    var Draw = /** @class */ (function () {
+        function Draw(svgLorentz) {
             this._svgLorentz = null;
             this._Padding = null;
             this._fullWidth = null;
@@ -9,47 +9,63 @@ var Lorentz;
             this.DurationSize = null;
             this.svgLorentz = svgLorentz;
         }
-        get svgLorentz() {
-            if (this._svgLorentz === null) {
-                this._svgLorentz = document.getElementById("svgSpeedLorentz");
-            }
-            return this._svgLorentz;
-        }
+        Object.defineProperty(Draw.prototype, "svgLorentz", {
+            get: function () {
+                if (this._svgLorentz === null) {
+                    this._svgLorentz = document.getElementById("svgSpeedLorentz");
+                }
+                return this._svgLorentz;
+            },
+            set: function (value) {
+                this._svgLorentz = document.getElementById(value);
+            },
+            enumerable: true,
+            configurable: true
+        });
         ;
-        set svgLorentz(value) {
-            this._svgLorentz = document.getElementById(value);
-        }
         ;
-        get padding() {
-            if (this._Padding === null) {
-                return 5;
-            }
-            return this._Padding;
-        }
+        Object.defineProperty(Draw.prototype, "padding", {
+            get: function () {
+                if (this._Padding === null) {
+                    return 5;
+                }
+                return this._Padding;
+            },
+            set: function (value) {
+                this._Padding = value;
+            },
+            enumerable: true,
+            configurable: true
+        });
         ;
-        set padding(value) {
-            this._Padding = value;
-        }
-        get fullWidth() {
-            if (this._fullWidth === null) {
-                return true;
-            }
-            return this._fullWidth;
-        }
+        Object.defineProperty(Draw.prototype, "fullWidth", {
+            get: function () {
+                if (this._fullWidth === null) {
+                    return true;
+                }
+                return this._fullWidth;
+            },
+            set: function (value) {
+                this._fullWidth = value;
+            },
+            enumerable: true,
+            configurable: true
+        });
         ;
-        set fullWidth(value) {
-            this._fullWidth = value;
-        }
-        get frame() {
-            return {
-                width: this.svgLorentz.viewBox.baseVal.width * (1 - (this.padding / 100)),
-                height: this.svgLorentz.viewBox.baseVal.height * (1 - (this.padding / 50)),
-                xoffset: this.svgLorentz.viewBox.baseVal.width * (this.padding / 200),
-                yoffset: this.svgLorentz.viewBox.baseVal.height * (this.padding / 100)
-            };
-        }
+        Object.defineProperty(Draw.prototype, "frame", {
+            get: function () {
+                return {
+                    width: this.svgLorentz.viewBox.baseVal.width * (1 - (this.padding / 100)),
+                    height: this.svgLorentz.viewBox.baseVal.height * (1 - (this.padding / 50)),
+                    xoffset: this.svgLorentz.viewBox.baseVal.width * (this.padding / 200),
+                    yoffset: this.svgLorentz.viewBox.baseVal.height * (this.padding / 100)
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
         ;
-        Rectangle(coords) {
+        Draw.prototype.Rectangle = function (coords) {
             if (coords.centerx !== undefined && coords.x === undefined) {
                 coords.x = coords.centerx - coords.width / 2;
             }
@@ -59,7 +75,7 @@ var Lorentz;
             if (!this._TranslatePercent(coords)) {
                 return false;
             }
-            const newRectangle = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+            var newRectangle = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
             newRectangle.setAttribute('x', coords.x);
             newRectangle.setAttribute('y', coords.y);
             newRectangle.setAttribute('width', coords.width);
@@ -67,9 +83,9 @@ var Lorentz;
             newRectangle.setAttribute('class', coords.class);
             this.svgLorentz.appendChild(newRectangle);
             return true;
-        }
+        };
         ;
-        Circle(coords) {
+        Draw.prototype.Circle = function (coords) {
             if (coords !== undefined && coords.drawPoint === false) {
                 return false;
             }
@@ -79,7 +95,7 @@ var Lorentz;
             if (!this._TranslatePercent(coords)) {
                 return false;
             }
-            const newCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            var newCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
             newCircle.setAttribute("cx", coords.centerx);
             newCircle.setAttribute("cy", coords.centery);
             newCircle.setAttribute("r", coords.width);
@@ -95,11 +111,11 @@ var Lorentz;
             }
             this.svgLorentz.appendChild(newCircle);
             return true;
-        }
+        };
         ;
-        Line(coords) {
+        Draw.prototype.Line = function (coords) {
             if (this._TranslatePercent(coords)) {
-                const newLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                var newLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
                 newLine.setAttribute('x1', coords.x);
                 newLine.setAttribute('y1', coords.y);
                 newLine.setAttribute('x2', coords.tox);
@@ -115,28 +131,30 @@ var Lorentz;
                 }
                 this.svgLorentz.appendChild(newLine);
             }
-        }
+        };
         ;
-        Overlay(duration = "10") {
+        Draw.prototype.Overlay = function (duration) {
+            if (duration === void 0) { duration = "10"; }
             this.Duration = parseFloat(duration);
             this.DurationSize = 100 / this.Duration;
-            const parentElement = this.svgLorentz.parentElement;
-            const emptySvg = this.svgLorentz.cloneNode(false);
+            var parentElement = this.svgLorentz.parentElement;
+            var emptySvg = this.svgLorentz.cloneNode(false);
             parentElement.removeChild(this.svgLorentz);
             parentElement.appendChild(emptySvg);
             this._svgLorentz = emptySvg;
             this.Line({ x: 0, y: 0, tox: 0, toy: 100, class: "centerLine" });
-            for (let i = this.DurationSize; Math.round(i) <= 100; i += this.DurationSize) {
+            for (var i = this.DurationSize; Math.round(i) <= 100; i += this.DurationSize) {
                 this.Line({ x: i * -1, y: i, tox: i, toy: i, class: "guideLines" });
                 this.Line({ x: i, y: i, tox: i, toy: 100, class: "guideLines" });
                 this.Line({ x: i * -1, y: i, tox: i * -1, toy: 100, class: "guideLines" });
             }
             this.Line({ x: 0, y: 0, tox: 100, toy: 100, class: "lightLines" });
             this.Line({ x: 0, y: 0, tox: -100, toy: 100, class: "lightLines" });
-        }
+        };
         ;
-        Padding(addLabels = 10) {
-            let newRectangle = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        Draw.prototype.Padding = function (addLabels) {
+            if (addLabels === void 0) { addLabels = 10; }
+            var newRectangle = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
             newRectangle.setAttribute('x', "-1");
             newRectangle.setAttribute('y', "-1");
             newRectangle.setAttribute('width', this.svgLorentz.viewBox.baseVal.width + 2);
@@ -165,9 +183,9 @@ var Lorentz;
             newRectangle.setAttribute('class', 'padding');
             this.svgLorentz.appendChild(newRectangle);
             if (addLabels > 0) {
-                let newText = null;
-                let textNode = null;
-                for (let i = 0; i <= 100; i += addLabels) {
+                var newText = null;
+                var textNode = null;
+                for (var i = 0; i <= 100; i += addLabels) {
                     if (this.fullWidth) {
                         if (i === 0) {
                             newText = document.createElementNS('http://www.w3.org/2000/svg', "text");
@@ -206,13 +224,13 @@ var Lorentz;
                     }
                 }
             }
-        }
+        };
         ;
-        Curve(atTime, duration) {
-            const speedInterval = 0.01;
-            let prevCoord = this.CreateCoord(atTime, duration, 0);
-            for (let i = 0; i < 0.999; i += speedInterval) {
-                let nextCoord = this.CreateCoord(atTime, duration, i);
+        Draw.prototype.Curve = function (atTime, duration) {
+            var speedInterval = 0.01;
+            var prevCoord = this.CreateCoord(atTime, duration, 0);
+            for (var i = 0; i < 0.999; i += speedInterval) {
+                var nextCoord = this.CreateCoord(atTime, duration, i);
                 if (this._ValidY(nextCoord.centery)) {
                     this.Line({
                         x: prevCoord.centerx,
@@ -235,10 +253,10 @@ var Lorentz;
                     break;
                 }
             }
-        }
+        };
         ;
-        CreateCoord(atTime, duration, speed) {
-            let coord = {};
+        Draw.prototype.CreateCoord = function (atTime, duration, speed) {
+            var coord = {};
             coord.lorentz = {};
             coord.lorentz.sol = 1;
             coord.lorentz.time = parseFloat(atTime) * (100 / duration);
@@ -253,19 +271,19 @@ var Lorentz;
             coord.centery = coord.posy;
             coord.class = "lorentzItem";
             return coord;
-        }
+        };
         ;
-        CreateCoordRealTime(realTime, duration, speed) {
-            let relCoord = this.CreateCoord(1, duration, speed);
-            let coord = {};
+        Draw.prototype.CreateCoordRealTime = function (realTime, duration, speed) {
+            var relCoord = this.CreateCoord(1, duration, speed);
+            var coord = {};
             coord.centery = parseFloat(realTime) * (100 / duration);
             coord.percentOfY = coord.centery / relCoord.centery;
             coord.centerx = relCoord.centerx * coord.percentOfY;
             coord.class = "lorentzItem";
             return coord;
-        }
+        };
         ;
-        TestPattern() {
+        Draw.prototype.TestPattern = function () {
             this.Rectangle({ centerx: 0, centery: 20, width: 8, height: 8, class: "testRed" });
             this.Rectangle({ centerx: 0, centery: 20, width: 5, height: 5, class: "testBlue" });
             this.Circle({ centerx: 0, centery: 20, diameter: 5 });
@@ -273,9 +291,9 @@ var Lorentz;
             this.Circle({ centerx: -100, centery: 100 });
             this.Circle({ centerx: 100, centery: 0 });
             this.Circle({ centerx: 100, centery: 100 });
-        }
-        _TranslatePercent(coords) {
-            let isValid = true;
+        };
+        Draw.prototype._TranslatePercent = function (coords) {
+            var isValid = true;
             if (coords.x !== undefined) {
                 if (!this._ValidX(coords.x)) {
                     isValid = false;
@@ -319,25 +337,26 @@ var Lorentz;
                 coords.height = (parseFloat(coords.height) / 100) * this.frame.height;
             }
             return isValid;
-        }
+        };
         ;
-        _TranslatePercentX(oldX) {
+        Draw.prototype._TranslatePercentX = function (oldX) {
             return this.frame.xoffset + ((parseFloat(oldX + 100) / (this.fullWidth ? 200 : 100)) * this.frame.width) - (this.fullWidth ? 0 : (this.frame.width));
-        }
+        };
         ;
-        _TranslatePercentY(oldY) {
+        Draw.prototype._TranslatePercentY = function (oldY) {
             return this.svgLorentz.viewBox.baseVal.height - (this.frame.yoffset + (parseFloat(oldY) / 100) * this.frame.height);
-        }
+        };
         ;
-        _ValidX(x) {
+        Draw.prototype._ValidX = function (x) {
             return true || Math.round(x) >= (this.fullWidth ? -100 : 0) && Math.round(x) <= 100;
-        }
+        };
         ;
-        _ValidY(y) {
+        Draw.prototype._ValidY = function (y) {
             return true || Math.round(y) >= 0 && Math.round(y) <= 100;
-        }
+        };
         ;
-    }
+        return Draw;
+    }());
     Lorentz.Draw = Draw;
 })(Lorentz || (Lorentz = {}));
 //# sourceMappingURL=lorentz_draw.js.map

@@ -1,4 +1,4 @@
-const timeSize = 10;
-const speedOfLight = 299792458;
+var timeSize = 10;
+var speedOfLight = 299792458;
 // var Lorentz = {};
 //# sourceMappingURL=defines.js.map
