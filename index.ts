@@ -76,3 +76,21 @@ for (let i=0; i<contentEditables.length; i++) {
 		});
 	});
 }
+
+namespace PHPTryouts {
+	export class Foo {
+		GetType() {
+			return (this as any).constructor.name;
+		}
+	}
+
+	export class Bar extends Foo {
+		Huh() {
+			return this.GetType();
+		}
+	}
+}
+
+let to = new PHPTryouts.Bar();
+
+console.log(to.Huh());

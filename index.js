@@ -1,3 +1,16 @@
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var lorentz_Items_Speed = null;
 var lorentz_Draw_Static = null;
 var lorentz_Draw_Static_Half = null;
@@ -70,4 +83,29 @@ for (var i = 0; i < contentEditables.length; i++) {
         });
     });
 }
+var PHPTryouts;
+(function (PHPTryouts) {
+    var Foo = /** @class */ (function () {
+        function Foo() {
+        }
+        Foo.prototype.GetType = function () {
+            return this.constructor.name;
+        };
+        return Foo;
+    }());
+    PHPTryouts.Foo = Foo;
+    var Bar = /** @class */ (function (_super) {
+        __extends(Bar, _super);
+        function Bar() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        Bar.prototype.Huh = function () {
+            return this.GetType();
+        };
+        return Bar;
+    }(Foo));
+    PHPTryouts.Bar = Bar;
+})(PHPTryouts || (PHPTryouts = {}));
+var to = new PHPTryouts.Bar();
+console.log(to.Huh());
 //# sourceMappingURL=index.js.map
