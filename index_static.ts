@@ -1,3 +1,11 @@
+document.getElementById('spnStaticDuration').addEventListener("blur", function (e) {
+	Lorentz.drawLorentzStatic();
+});
+
+document.getElementById('spnStaticInterval').addEventListener("blur", function (e) {
+	Lorentz.drawLorentzStatic();
+});
+
 namespace Lorentz {
 	export function drawLorentzStatic() {
 		const duration = parseInt(document.getElementById('spnStaticDuration').innerText);
@@ -15,10 +23,3 @@ namespace Lorentz {
 	}
 }
 
-document.getElementById('spnStaticDuration').addEventListener("blur", function (e) {
-	Lorentz.drawLorentzStatic();
-});
-
-document.getElementById('spnStaticInterval').addEventListener("blur", function (e) {
-	Lorentz.drawLorentzStatic();
-});

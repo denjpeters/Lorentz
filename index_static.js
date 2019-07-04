@@ -1,3 +1,9 @@
+document.getElementById('spnStaticDuration').addEventListener("blur", function (e) {
+    Lorentz.drawLorentzStatic();
+});
+document.getElementById('spnStaticInterval').addEventListener("blur", function (e) {
+    Lorentz.drawLorentzStatic();
+});
 var Lorentz;
 (function (Lorentz) {
     function drawLorentzStatic() {
@@ -12,10 +18,4 @@ var Lorentz;
     }
     Lorentz.drawLorentzStatic = drawLorentzStatic;
 })(Lorentz || (Lorentz = {}));
-document.getElementById('spnStaticDuration').addEventListener("blur", function (e) {
-    Lorentz.drawLorentzStatic();
-});
-document.getElementById('spnStaticInterval').addEventListener("blur", function (e) {
-    Lorentz.drawLorentzStatic();
-});
 //# sourceMappingURL=index_static.js.map
