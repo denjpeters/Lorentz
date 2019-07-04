@@ -8,7 +8,8 @@
     "url": "https://github.com/SolidBasisVentures/1BinderPHP.git"
   },
   "dependencies": {
-    "mathjax": "^2.7.2"
+    "@types/mathjax": "0.0.35",
+    "mathjax": "^2.7.5"
   },
   "author": "",
   "license": "ISC"
