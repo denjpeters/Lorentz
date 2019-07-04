@@ -15,6 +15,10 @@ document.getElementById('rngSpeed').addEventListener("change", function (e) {
 	Lorentz.drawLorentzSpeed(parseFloat((this as HTMLInputElement).value));
 });
 
+document.getElementById('rngSpeed').addEventListener("input", function (e) {
+	Lorentz.drawLorentzSpeed(parseFloat((this as HTMLInputElement).value));
+});
+
 document.getElementById('rngSpeed').addEventListener("dblclick", function (e) {
 	Lorentz.drawLorentzSpeed(parseFloat("0"));
 });
