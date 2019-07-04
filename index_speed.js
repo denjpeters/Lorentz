@@ -16,7 +16,8 @@ document.getElementById('rngSpeed').addEventListener("dblclick", function (e) {
 });
 var Lorentz;
 (function (Lorentz) {
-    function drawLorentzSpeed(speed = null) {
+    function drawLorentzSpeed(speed) {
+        if (speed === void 0) { speed = null; }
         if (speed === null) {
             speed = parseFloat(document.getElementById('txtSpeed').innerText);
         }
@@ -26,7 +27,7 @@ var Lorentz;
             speed = -99.999;
         document.getElementById('txtSpeed').innerText = speed;
         document.getElementById('rngSpeed').value = speed;
-        const duration = parseInt(document.getElementById('txtDuration').innerText);
+        var duration = parseInt(document.getElementById('txtDuration').innerText);
         document.getElementById('txtDuration').innerText = duration.toFixed(0);
         document.getElementById('spnDuration').innerText = duration.toFixed(0);
         document.getElementById('yourAgeAcc').innerText = duration.toFixed(0);

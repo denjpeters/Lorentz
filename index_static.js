@@ -1,11 +1,11 @@
 var Lorentz;
 (function (Lorentz) {
     function drawLorentzStatic() {
-        const duration = parseInt(document.getElementById('spnStaticDuration').innerText);
-        const interval = parseInt(document.getElementById('spnStaticInterval').innerText);
+        var duration = parseInt(document.getElementById('spnStaticDuration').innerText);
+        var interval = parseInt(document.getElementById('spnStaticInterval').innerText);
         lorentz_Draw_Static.padding = 5;
         lorentz_Draw_Static.Overlay(duration);
-        for (let i = interval; i < duration; i += interval) {
+        for (var i = interval; i < duration; i += interval) {
             lorentz_Draw_Static.Curve(i, duration);
         }
         lorentz_Draw_Static.Padding();

@@ -1,8 +1,8 @@
 var Lorentz;
 (function (Lorentz) {
     function drawLorentzStaticHalf() {
-        const duration = 10;
-        const interval = 1;
+        var duration = 10;
+        var interval = 1;
         // lorentz_Draw_Static_Half.padding = 0;
         lorentz_Draw_Static_Half.fullWidth = false;
         lorentz_Draw_Static_Half.Overlay(duration);
