@@ -1,22 +1,21 @@
-window.drawLorentzStatic = function() {
-	const duration = parseInt(document.getElementById('spnStaticDuration').innerText);
-	const interval = parseInt(document.getElementById('spnStaticInterval').innerText);
-
-	lorentz_Draw_Static.padding = 5;
-
-	lorentz_Draw_Static.Overlay(duration);
-
-	for (let i=interval; i<duration; i+=interval) {
-		lorentz_Draw_Static.Curve(i, duration);
-	}
-
-	lorentz_Draw_Static.Padding();
-};
-
+var Lorentz;
+(function (Lorentz) {
+    function drawLorentzStatic() {
+        const duration = parseInt(document.getElementById('spnStaticDuration').innerText);
+        const interval = parseInt(document.getElementById('spnStaticInterval').innerText);
+        lorentz_Draw_Static.padding = 5;
+        lorentz_Draw_Static.Overlay(duration);
+        for (let i = interval; i < duration; i += interval) {
+            lorentz_Draw_Static.Curve(i, duration);
+        }
+        lorentz_Draw_Static.Padding();
+    }
+    Lorentz.drawLorentzStatic = drawLorentzStatic;
+})(Lorentz || (Lorentz = {}));
 document.getElementById('spnStaticDuration').addEventListener("blur", function (e) {
-	window.drawLorentzStatic();
+    Lorentz.drawLorentzStatic();
 });
-
 document.getElementById('spnStaticInterval').addEventListener("blur", function (e) {
-	window.drawLorentzStatic();
+    Lorentz.drawLorentzStatic();
 });
+//# sourceMappingURL=index_static.js.map
