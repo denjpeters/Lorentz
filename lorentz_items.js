@@ -5,7 +5,7 @@ var Lorentz;
             this.items = [];
             this._duration = 10;
             this._lorentzDraw = null;
-            this._lorentzDraw = new Draw(svgLorentz);
+            this._lorentzDraw = new Lorentz.Draw(svgLorentz);
             this.drawItems();
         }
         populateStatic(duration = 5, increments = 0.01) {
