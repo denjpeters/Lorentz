@@ -89,8 +89,14 @@ namespace PHPTryouts {
 			return this.GetType();
 		}
 	}
+
+	export let x = 1;
 }
 
 let to = new PHPTryouts.Bar();
 
-console.log(to.Huh());
+// console.log(to.Huh());
+
+console.log('x', PHPTryouts.x);
+PHPTryouts.x++;
+console.log('x', PHPTryouts.x);

@@ -105,7 +105,11 @@ var PHPTryouts;
         return Bar;
     }(Foo));
     PHPTryouts.Bar = Bar;
+    PHPTryouts.x = 1;
 })(PHPTryouts || (PHPTryouts = {}));
 var to = new PHPTryouts.Bar();
-console.log(to.Huh());
+// console.log(to.Huh());
+console.log('x', PHPTryouts.x);
+PHPTryouts.x++;
+console.log('x', PHPTryouts.x);
 //# sourceMappingURL=index.js.map
