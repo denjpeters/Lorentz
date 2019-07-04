@@ -10,3 +10,5 @@ composer.phar
 .idea/misc.xml
 .idea/modules.xml
 .idea/vcs.xml
+.sass-cache/
+node_modules/*

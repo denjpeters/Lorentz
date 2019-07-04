@@ -1,84 +1,56 @@
 body {
-	display: flex;
-	flex-direction: column;
-}
+  display: flex;
+  flex-direction: column; }
 
 h1 {
-	color:      blue;
-	text-align: center;
-}
+  color: blue;
+  text-align: center; }
 
 body > div {
-	display: flex;
-	flex-direction: row;
-}
-
-#divNav {
-
-}
+  display: flex;
+  flex-direction: row; }
 
 #divNav > button {
-	width: 15em;
-}
+  width: 15em; }
 
 .divBody {
-	display: flex;
-	flex-direction: column;
-	width:      100%;
-	align-content: center;
-}
-
-.divBody > div {
-	width:      100%;
-	text-align: center;
-	padding:    0;
-	margin-top: 0.5em;
-}
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-content: center; }
+  .divBody > div {
+    width: 100%;
+    text-align: center;
+    padding: 0;
+    margin-top: 0.5em; }
 
 .svgLorentz {
-	max-width: 100vh;
-	/*width:      90vw;*/
-	/*max-height: calc(100vh - 5em) !important;*/
-	/*height:     50vw;*/
-	/*border:           1px solid #c3c3c3;*/
-	/*background-color: #eeeeee;*/
-}
-
-.svgLorentz .centerLine {
-	stroke-width: 5px;
-	stroke:       black;
-}
-
-.svgLorentz .guideLines {
-	stroke-width: 1px;
-	stroke:       black;
-}
-
-.svgLorentz .lightLines {
-	stroke-width: 5px;
-	stroke:       gold;
-}
-
-.svgLorentz .staticLines {
-	stroke-width: 5px;
-	stroke:       blue;
-}
-
-.svgLorentz .lorentzItem {
-	cursor: pointer;
-}
-
-.svgLorentz .testRed {
-	fill: red;
-}
-
-.svgLorentz .testBlue {
-	fill: blue;
-}
-
-.svgLorentz .padding {
-	fill: white;
-}
+  max-width: 100vh;
+  /*width:      90vw;*/
+  /*max-height: calc(100vh - 5em) !important;*/
+  /*height:     50vw;*/
+  /*border:           1px solid #c3c3c3;*/
+  /*background-color: #eeeeee;*/ }
+  .svgLorentz .centerLine {
+    stroke-width: 5px;
+    stroke: black; }
+  .svgLorentz .guideLines {
+    stroke-width: 1px;
+    stroke: black; }
+  .svgLorentz .lightLines {
+    stroke-width: 5px;
+    stroke: gold; }
+  .svgLorentz .staticLines {
+    stroke-width: 5px;
+    stroke: blue; }
+  .svgLorentz .lorentzItem {
+    cursor: pointer; }
+  .svgLorentz .testRed {
+    fill: red; }
+  .svgLorentz .testBlue {
+    fill: blue; }
+  .svgLorentz .padding {
+    fill: white; }
 
 .svgLorentz .percentageFont {
 	text-anchor: middle;
@@ -88,15 +60,10 @@ body > div {
 }
 
 @media (max-width: 767.98px) {
-	#rngSpeed {
-		display: none;
-	}
-}
+  #rngSpeed {
+    display: none; } }
+@media print {
+  .no-print, .no-print * {
+    display: none !important; } }
 
-@media print
-{
-	.no-print, .no-print *
-	{
-		display: none !important;
-	}
-}
+/*# sourceMappingURL=index.css.map */
