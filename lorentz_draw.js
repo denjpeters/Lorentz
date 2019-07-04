@@ -137,10 +137,10 @@ var Lorentz;
             if (duration === void 0) { duration = "10"; }
             this.Duration = parseFloat(duration);
             this.DurationSize = 100 / this.Duration;
-            var parentElement = this.svgLorentz.parentNode;
+            var parentNode = this.svgLorentz.parentNode;
             var emptySvg = this.svgLorentz.cloneNode(false);
-            parentElement.removeChild(this.svgLorentz);
-            parentElement.appendChild(emptySvg);
+            parentNode.removeChild(this.svgLorentz);
+            parentNode.appendChild(emptySvg);
             this._svgLorentz = emptySvg;
             this.Line({ x: 0, y: 0, tox: 0, toy: 100, class: "centerLine" });
             for (var i = this.DurationSize; Math.round(i) <= 100; i += this.DurationSize) {

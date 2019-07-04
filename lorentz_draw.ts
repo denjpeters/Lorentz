@@ -133,10 +133,10 @@ namespace Lorentz {
 			this.Duration = parseFloat(duration);
 			this.DurationSize = 100 / this.Duration;
 
-			const parentElement = this.svgLorentz.parentElement;
+			const parentNode = this.svgLorentz.parentNode;
 			const emptySvg = this.svgLorentz.cloneNode(false);
-			parentElement.removeChild(this.svgLorentz);
-			parentElement.appendChild(emptySvg);
+			parentNode.removeChild(this.svgLorentz);
+			parentNode.appendChild(emptySvg);
 			this._svgLorentz = emptySvg;
 
 			this.Line({x: 0, y: 0, tox: 0, toy: 100, class: "centerLine"});
