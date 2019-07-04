@@ -137,7 +137,7 @@ var Lorentz;
             if (duration === void 0) { duration = "10"; }
             this.Duration = parseFloat(duration);
             this.DurationSize = 100 / this.Duration;
-            var parentElement = this.svgLorentz.parentElement;
+            var parentElement = this.svgLorentz.parentNode;
             var emptySvg = this.svgLorentz.cloneNode(false);
             parentElement.removeChild(this.svgLorentz);
             parentElement.appendChild(emptySvg);
